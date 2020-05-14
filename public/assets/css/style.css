@@ -1,0 +1,97 @@
+body {
+    padding-top: 10px;
+    font-family: 'Old Standard TT', serif;
+    font-size: 1.5em;
+}
+
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size : 4em;
+    padding-top: 50px;
+    vertical-align: bottom;
+}
+
+nav {
+    margin-top: 2em;
+    margin-bottom: 0;
+    font-size: 1.2em;
+}
+nav a{
+    text-align: center;
+}
+.navbar-nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.btn-dark{
+    border-radius: 25px;
+    padding:15px;
+}
+
+blockquote {
+    padding: 1em;
+    border-radius: 25px;
+    border: groove 2px lightslategray;
+}
+
+.last-chapter-container {
+    background-color:#E9ECEF;
+    padding: 1em;
+    border-radius: 25px;
+    border: 2px groove lightslategray;
+}
+
+
+.top-caption {
+    caption-side: top;
+  }
+
+footer {
+    margin-top: 3em;
+    padding-top: 1em;
+    text-align: center;
+    color: lightgray;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+
+@media all and (max-width:768px){
+
+    .header-logo {
+        margin-top:  70px;
+        margin-left: 12%;
+        padding-top: 20px;
+        max-height: 150px;
+        max-width: 140px;
+    }
+
+
+}
+
+
+@media all and (max-width:480px){
+    body{
+        font-size: 1em;
+    }
+    .header-logo {
+        margin-top: 40px;
+        padding-top: 10px;
+        margin-left: -5px;
+        padding-right: 1px;
+        max-width: 110px;
+        max-height: 90px;
+    }
+
+    .navbar .container {
+        line-height: 2.3em;
+    }
+    .btn-dark{
+        padding: 8px;
+    }
+
+    h1 {
+        font-size: 3em;
+    }
+}
