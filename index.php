@@ -3,7 +3,7 @@
 require('controller/homeController.php');
 
 if (isset($_GET['page'])) {
-    switch ($_GET) {
+    switch ($_GET['page']) {
     
         case 'connexion' :
             displayLoginPage();
