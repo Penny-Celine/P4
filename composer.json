@@ -9,6 +9,6 @@
     ],
     "require": {},
     "autoload": {
-        "psr-4": {"App\\" : ["controller/","model/","view/"]}
+        "psr-4": {"App\\" : ["src/"]}
     }
 }
