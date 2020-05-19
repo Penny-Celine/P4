@@ -1,21 +1,26 @@
 <?php
 
-require('controller/homeController.php');
+require('vendor/autoload.php');
+
+use App\PageControl;
+
+$page = new PageControl();
+
 
 if (isset($_GET['page'])) {
     switch ($_GET['page']) {
     
         case 'connexion' :
-            displayLoginPage();
+            $loginPage = $page->displayLoginPage();
             break;
         case 'inscription' :
-            displaySubscribePage();
+            $subscribePage = $page->displaySubscribePage();
             break;
         case 'chapitres':
-            displayChaptersList();
+            $chaptersPage = $page->displayChaptersList();
             break;
         default:
-            throw new Exception('404 : Page non trouvée');
+            throw new \Exception('404 : Page non trouvée');
     
     }
 }

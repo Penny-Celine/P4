@@ -1,0 +1,14 @@
+{
+    "name": "admin/p4_maupoux_celine",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Céline Maupoux",
+            "email": "celine.maupoux@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {"App\\" : ["controller/","model/","view/"]}
+    }
+}
