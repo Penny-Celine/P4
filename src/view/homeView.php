@@ -7,15 +7,15 @@
 		<meta name= "description" content= "Blog de l'écrivain fictif Jean Forteroche appelé Billet pour l'Alaska réalisé pour un projet OpenClassrooms sur le langage PHP" />
     <meta name="author" content="Céline Maupoux" />
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Old+Standard+TT&display=swap" rel="stylesheet">
-    <link href="../public/assets/bootstrap/css/bootstrap.css" rel="stylesheet"/>
-    <link href="../public/assets/css/style.css" rel="stylesheet"/>
+    <link href="public/assets/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+    <link href="public/assets/css/style.css" rel="stylesheet"/>
   </head>
 
   <body>
     <header class = "jumbotron">
 
       <div class = "row">
-        <img src="../public/images/logo-header.png" alt="" class = "header-logo offset-2 col-2 col-lg-2 justify-content-end"/>
+        <img src="public/images/logo-header.png" alt="" class = "header-logo offset-2 col-2 col-lg-2 justify-content-end"/>
         <h1 class = "col-8 col-lg-8">Billet pour l'Alaska</h1>
       </div>
 

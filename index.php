@@ -2,22 +2,22 @@
 
 require('vendor/autoload.php');
 
-use App\PageControl;
+use App\Controller\PageController;
 
-$page = new PageControl();
+$page = new PageController();
 
 
 if (isset($_GET['page'])) {
     switch ($_GET['page']) {
     
         case 'connexion' :
-            $loginPage = $page->displayLoginPage();
+            $page->displayLoginPage();
             break;
         case 'inscription' :
-            $subscribePage = $page->displaySubscribePage();
+            $page->displaySubscribePage();
             break;
         case 'chapitres':
-            $chaptersPage = $page->displayChaptersList();
+            $page->displayChaptersList();
             break;
         default:
             throw new \Exception('404 : Page non trouvée');
@@ -25,7 +25,7 @@ if (isset($_GET['page'])) {
     }
 }
 else {
-    displayHomePage();
+    $page->displayHomePage();
 }
 
 
