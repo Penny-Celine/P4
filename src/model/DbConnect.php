@@ -1,12 +1,12 @@
 <?php
 
-namespace Cmpx\P4;
+namespace App\Model;
 
 class DBConnect
 {
-    protected function getConnect()
+    public function getConnect()
     {
-        $dataBase = new \PDO('mysql:host=localhost;dbname=p4_maupoux_celine_bdd;port=3308;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $dataBase = new \PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';port='.DB_PORT.';charset=utf8', DB_USER, DB_PASSWORD, array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
         return $dataBase;
     }
 }

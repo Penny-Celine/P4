@@ -1,6 +1,7 @@
 <?php
 
 require('vendor/autoload.php');
+require('src/config/dev.php');
 
 use App\Controller\PageController;
 
