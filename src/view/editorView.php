@@ -42,7 +42,10 @@
   <body>
     <?php
         include 'headerTemplate.php';
-        echo $message;
+        if (isset($message))
+        {
+            echo $message;
+        }
     ?>
     <form action="" method="post">
       <p>
