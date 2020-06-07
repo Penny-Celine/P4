@@ -31,6 +31,7 @@
             $chapters = $this->_manager->getList();
             require 'src/view/editorView.php';
             require 'src/view/newChapterView.php';
+            //récupération de $_message qui ne fonctionne pas actuellement
             echo '<p> Message :' . $this->_message . '</p>';
             $pageContent = ob_get_clean();
             include_once 'src/view/layout.php';
@@ -49,6 +50,7 @@
 
                 if ($this->_manager->exists($_POST['title']))
                 {
+                    //modif de $_message
                     $this->_message = 'Ce titre est déjà pris';
                     unset($chapter);
                     echo 'jusqu\'ici tout va bien';
@@ -56,11 +58,10 @@
                 else
                 {
                     $this->_manager->add($chapter);
+                    //modif de $_message
                     $this->_message = 'Votre chapitre a bien été enregistré';
                     echo 'pourtant ça marche';
                 }
             }
         }
     }
-
-?>
