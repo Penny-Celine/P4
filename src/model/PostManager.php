@@ -67,12 +67,21 @@ class PostManager extends Manager
         return new Post($data);
       }
     }
+
+    public function getLastPost()
+    {
+        $request = $this->_dataBase->query('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments FROM chapter WHERE isDeleted = 0 ORDER BY id DESC LIMIT 1');
+        $data = $request->fetch(\PDO::FETCH_ASSOC);
+        
+        return new Post($data);
+    }
+    
     
     public function getList()
     {
       $chapters = [];
       
-      $request = $this->_dataBase->prepare('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments FROM chapter WHERE isDeleted = 0 ORDER BY title');
+      $request = $this->_dataBase->prepare('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments FROM chapter WHERE isDeleted = 0 ORDER BY id');
       $request->execute();
       
       while ($data = $request->fetch(\PDO::FETCH_ASSOC))

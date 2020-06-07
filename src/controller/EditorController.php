@@ -4,19 +4,38 @@
 
     class EditorController
     {
+        private $_manager;
+        private $_message;
+
         public function __construct() {
-            $manager = new \App\Model\PostManager();
-            $chapters = $manager->getList();
-            include 'src/view/editorView.php';
+            $this->_manager = new \App\Model\PostManager();
+            
+            $pageTitle = 'Edition de Chapitres';
+            $pageDescription = 'Page réservée au rédacteur du site. Edition de chapitres du livre Billet pour l\'Alaska';
         }
 
+        public function display() {
+
+            ob_start();
+            $chapters = $this->_manager->getList();
+            require 'src/view/editorView.php';
+            $pageContent = ob_get_clean();
+            require_once 'src/view/layout.php';
+
+        }
 
 
         public function createChapter() {
 
-            include 'src/view/newChapterView.php';
+            ob_start();
+            $chapters = $this->_manager->getList();
+            require 'src/view/editorView.php';
+            require 'src/view/newChapterView.php';
+            echo '<p> Message :' . $this->_message . '</p>';
+            $pageContent = ob_get_clean();
+            include_once 'src/view/layout.php';
 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST')
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-chapter']))
             {
                 $today = date('Y-m-d');
                 $chapter = new \App\Model\Post(['id' => 0,
@@ -28,15 +47,17 @@
                     'enableComments' => true,
                     'isDeleted' => false]);
 
-                if ($manager->exists($_POST['title']))
+                if ($this->_manager->exists($_POST['title']))
                 {
-                    $message = "Ce titre est déjà pris";
+                    $this->_message = 'Ce titre est déjà pris';
                     unset($chapter);
+                    echo 'jusqu\'ici tout va bien';
                 }
                 else
                 {
-                    $manager->add($chapter);
-                    $message = "Votre chapitre a bien été enregistré";
+                    $this->_manager->add($chapter);
+                    $this->_message = 'Votre chapitre a bien été enregistré';
+                    echo 'pourtant ça marche';
                 }
             }
         }

@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <title>Billet pour l'Alaska</title>
-    <meta name= "description" content= "Blog de l'écrivain fictif Jean Forteroche appelé Billet pour l'Alaska réalisé pour un projet OpenClassrooms sur le langage PHP" />
-    <?php
-      include 'headTemplate.php';
-    ?>
-  </head>
-
-  <body>
-    <?php 
-      include "headerTemplate.php";
-    ?>
 
     <div class ="row welcome-container">
       <div class="offset-1 col-10 col-lg-10">
@@ -30,16 +16,14 @@
           <div class = "row">
             <h2 class= "offset-3 col-6 last-chapter-title">
               <?php 
-                $lastChapterTitle = "Titre du dernier chapitre";
                 echo $lastChapterTitle;
               ?>
             </h2>
-            <span class="col-3 col-lg-3">Paru le 12/05/2020</span>
+            <span class="col-3 col-lg-3">Paru le <?php echo $lastChapterCreationDate; ?></span>
           </div>
           <div class="row">
             <p class="offset-1 col-10 col-lg-10">
               <?php 
-                $lastChapterContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
                 echo $lastChapterContent;
               ?>
             </p>
@@ -48,11 +32,3 @@
       </div>
     </div>
 
-    <footer class= "row footer">
-      <p class="col-12 col-lg-12">
-      Site développé par Céline Maupoux pour <a class="btn-dark" href="https://www.openclassrooms.com">OpenClassrooms</a> | <a class="btn-dark" href="siteMap.php">Plan du site</a> | <a class="btn-dark" href="legalNotice.php">Mentions légales</a>
-      </p>
-    </footer>
-  </body>
-
-</html>
