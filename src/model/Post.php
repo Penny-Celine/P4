@@ -91,17 +91,23 @@ class Post
 
     public function setEnableComments($enableComments) {
 
-        if (is_bool($enableComments))
+        if ($enableComments === 1)
         {
-            $this->_enableComments = $enableComments;
+            $this->_enableComments = 'true';
+        } else
+        {
+            $this->_enableComments = 'false';
         }
     }
 
     public function setIsDeleted($isDeleted) {
 
-        if (is_bool($isDeleted))
+        if ($isDeleted === 1)
         {
-            $this->_isDeleted = $isDeleted;
+            $this->_isDeleted = 'true';
+        } else
+        {
+            $this->_isDeleted = 'false';
         }
     }
 

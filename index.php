@@ -3,9 +3,9 @@
 require('vendor/autoload.php');
 require('src/config/dev.php');
 
-use App\Controller\PageController;
+use App\Controller\HomeController;
 
-$page = new PageController();
+$page = new HomeController();
 
 
 if (isset($_GET['page'])) {
@@ -19,6 +19,9 @@ if (isset($_GET['page'])) {
             break;
         case 'chapitres':
             $page->displayChaptersList();
+            break;
+        case 'nouveau_chapitre' :
+            $page->displayTextEditor();
             break;
         default:
             throw new \Exception('404 : Page non trouvée');
