@@ -91,12 +91,12 @@ class Post
 
     public function setEnableComments($enableComments) {
 
-        if ($enableComments === 1)
+        if ($enableComments === 'Oui')
         {
-            $this->_enableComments = 'true';
+            $this->_enableComments = 'Oui';
         } else
         {
-            $this->_enableComments = 'false';
+            $this->_enableComments = 'Non';
         }
     }
 
@@ -104,10 +104,10 @@ class Post
 
         if ($isDeleted === 1)
         {
-            $this->_isDeleted = 'true';
+            $this->_isDeleted = true;
         } else
         {
-            $this->_isDeleted = 'false';
+            $this->_isDeleted = false;
         }
     }
 

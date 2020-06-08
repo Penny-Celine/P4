@@ -42,10 +42,13 @@ blockquote {
     border: 2px groove lightslategray;
 }
 
-
 .top-caption {
     caption-side: top;
   }
+
+.deleted {
+    background-color: lightcoral;
+}
 
 footer {
     margin-top: 3em;

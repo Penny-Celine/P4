@@ -54,7 +54,9 @@ class PostManager extends Manager
 
     public function delete(Post $chapter)
     {
-      $this->_dataBase->exec('DELETE FROM chapter WHERE id = '.$chapter->id());
+      $request = $this->_dataBase->prepare('UPDATE chapter SET isDeleted = 1 WHERE id = :id');
+      $request->bindValue(':id', $chapter->id(), \PDO::PARAM_INT);
+      $request->execute();
     }
 
     public function getPost($info)
@@ -81,7 +83,7 @@ class PostManager extends Manager
     {
       $chapters = [];
       
-      $request = $this->_dataBase->prepare('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments FROM chapter WHERE isDeleted = 0 ORDER BY id');
+      $request = $this->_dataBase->prepare('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments FROM chapter ORDER BY id');
       $request->execute();
       
       while ($data = $request->fetch(\PDO::FETCH_ASSOC))
