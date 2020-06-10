@@ -6,7 +6,7 @@ class HomeController
 {
     private $_chapterDb;
     private $_lastChapter;
-    private $_lastChapterId;
+
 
 
     public function displayHomePage()
@@ -24,6 +24,18 @@ class HomeController
 
     }
 
+    public function displayChaptersList()
+    {
+        $this->_chapterDb = new \App\Model\PostManager();
+        ob_start();
+            $chapters = $this->_chapterDb->getList();
+            require 'src/view/headerTemplate.php';
+                          
+            require 'src/view/publicListView.php';
+            $pageContent = ob_get_clean();
+            require 'src/view/layout.php';
+    }
+
     public function displayLoginPage()
     {
         $editorPage = new EditorController();
@@ -36,5 +48,7 @@ class HomeController
         $editorPage = new EditorController();
         $editorPage->createChapter();
     }
+
+
 
 }

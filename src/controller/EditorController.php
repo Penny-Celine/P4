@@ -9,6 +9,7 @@
 
         public function __construct() {
             $this->_manager = new \App\Model\PostManager();
+            $this->_viewRenderer = new \App\Services\ViewRenderer();
 
             
             $pageTitle = 'Edition de Chapitres';
@@ -16,47 +17,16 @@
         }
 
         public function display() {
-
             ob_start();
             $chapters = $this->_manager->getList();
-                ob_start();
-                for ($i=0; isset($chapters[$i]); $i ++)
-                {
-                    if (!$chapters[$i]->isDeleted() || $chapters[$i]->isDeleted() === 0)
-                    {
-                        echo  '<tr>
-                            <td><input type="submit" value="Modifier" name="change-chapter' . $chapters[$i]->id() .'" />
-                            <td>' . $chapters[$i]->id() . '</td>
-                            <td>' . $chapters[$i]->userId() . '</td>
-                            <td>' . $chapters[$i]->title() . '</td>
-                            <td>' . $chapters[$i]->content() . '</td>
-                            <td>' . $chapters[$i]->creationDate() . '</td>
-                            <td>' . $chapters[$i]->modifiedDate() . '</td>
-                            <td>' . $chapters[$i]->enableComments() . '</td>
-                        </tr>';
-                    } else 
-                    {
-                        echo '<tr class=\'deleted\'>
-                            <td> Supprimé </td>
-                            <td>' . $chapters[$i]->id() . '</td>
-                            <td>' . $chapters[$i]->userId() . '</td>
-                            <td>' . $chapters[$i]->title() . '</td>
-                            <td>' . $chapters[$i]->content() . '</td>
-                            <td>' . $chapters[$i]->creationDate() . '</td>
-                            <td>' . $chapters[$i]->modifiedDate() . '</td>
-                            <td>' . $chapters[$i]->enableComments() . '</td>
-                        </tr>';
-                    }
-                }
-                $listTable = ob_get_clean();              
-            require 'src/view/editorView.php';
+            require 'src/view/headerTemplate.php';
+            $this->_viewRenderer->render('editorView.php', $chapters);
             $pageContent = ob_get_clean();
             require 'src/view/layout.php';
-            var_dump($_POST);
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change-chapter']))
             {
-                
+               echo 'trouvé'; 
             }
 
         }
@@ -64,46 +34,17 @@
 
         public function createChapter() {
 
-            $chapters = $this->_manager->getList();
             ob_start();
-            for ($i=0; isset($chapters[$i]); $i ++)
-            {
-                if (!$chapters[$i]->isDeleted() || $chapters[$i]->isDeleted() === 0)
-                {
-                    echo  '<tr>
-                        <td><input type="submit" value="Modifier" name="change-chapter' . $chapters[$i]->id() .'" />
-                        <td>' . $chapters[$i]->id() . '</td>
-                        <td>' . $chapters[$i]->userId() . '</td>
-                        <td>' . $chapters[$i]->title() . '</td>
-                        <td>' . $chapters[$i]->content() . '</td>
-                        <td>' . $chapters[$i]->creationDate() . '</td>
-                        <td>' . $chapters[$i]->modifiedDate() . '</td>
-                        <td>' . $chapters[$i]->enableComments() . '</td>
-                    </tr>';
-                } else 
-                {
-                    echo '<tr class=\'deleted\'>
-                        <td> Supprimé </td>
-                        <td>' . $chapters[$i]->id() . '</td>
-                        <td>' . $chapters[$i]->userId() . '</td>
-                        <td>' . $chapters[$i]->title() . '</td>
-                        <td>' . $chapters[$i]->content() . '</td>
-                        <td>' . $chapters[$i]->creationDate() . '</td>
-                        <td>' . $chapters[$i]->modifiedDate() . '</td>
-                        <td>' . $chapters[$i]->enableComments() . '</td>
-                    </tr>';
-                }
-            }
-            $listTable = ob_get_clean();
-            require 'src/view/editorView.php';
+            require 'src/view/headerTemplate.php';
             require 'src/view/newChapterView.php';
             //récupération de $_message qui ne fonctionne pas actuellement
             echo '<p> Message :' . $this->message . '</p>';
             $pageContent = ob_get_clean();
             include 'src/view/layout.php';
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-chapter']))
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-chapter']) && isset($_POST['content']))
             {
+
                 $today = date('Y-m-d');
                 $chapter = new \App\Model\Post(['id' => 0,
                     'userId' => 1, 
