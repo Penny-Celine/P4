@@ -21,7 +21,6 @@
             </thead>
             <tbody>
               <?php
-              var_dump($chapters);
               
               for ($i=0; isset($chapters[$i]); $i ++)
               {
@@ -62,16 +61,6 @@
                     <label for="content">Contenu : </label><textarea name="content"><?= $chapterContent ?? ''?></textarea><br/>
                     <input type="submit" value="Enregistrer ce chapitre" name="save-change" />
                 </p>
-                <script>
-                  tinymce.init({
-                    selector: 'textarea',
-                    plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-                    toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
-                    toolbar_mode: 'floating',
-                    tinycomments_mode: 'embedded',
-                    tinycomments_author: 'Author name'
-                  });
-                </script>
             </form>
           </div>
         </section>
