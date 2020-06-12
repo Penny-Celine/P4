@@ -33,7 +33,7 @@ class PostManager extends Manager
         $chapter->hydrate([
             'id' => $this->_dataBase->lastInsertId(),
 
-            'isDeleted' => false,
+            'isDeleted' => "Non",
         ]);
 
     }
@@ -41,7 +41,7 @@ class PostManager extends Manager
     public function exists($info)
     {
      
-      $request = $this->_dataBase->prepare('SELECT COUNT(*) FROM chapter WHERE title = :title AND isDeleted = 0');
+      $request = $this->_dataBase->prepare('SELECT COUNT(*) FROM chapter WHERE title = :title AND isDeleted = "Non"');
       $request->execute([':title' => $info]);
       
       return (bool) $request->fetchColumn();
@@ -54,7 +54,7 @@ class PostManager extends Manager
 
     public function delete(Post $chapter)
     {
-      $request = $this->_dataBase->prepare('UPDATE chapter SET isDeleted = 1 WHERE id = :id');
+      $request = $this->_dataBase->prepare('UPDATE chapter SET isDeleted = "Oui" WHERE id = :id');
       $request->bindValue(':id', $chapter->id(), \PDO::PARAM_INT);
       $request->execute();
     }
@@ -63,7 +63,7 @@ class PostManager extends Manager
     {
       if (is_int($info))
       {
-        $request = $this->_dataBase->query('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments FROM chapter WHERE id = '.$info.' AND isDeleted = 0');
+        $request = $this->_dataBase->query('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments, isDeleted FROM chapter WHERE id = '.$info );
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         
         return new Post($data);
@@ -72,7 +72,7 @@ class PostManager extends Manager
 
     public function getLastPost()
     {
-        $request = $this->_dataBase->query('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments FROM chapter WHERE isDeleted = 0 ORDER BY id DESC LIMIT 1');
+        $request = $this->_dataBase->query('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments FROM chapter WHERE isDeleted = "Non" ORDER BY id DESC LIMIT 1');
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         
         return new Post($data);
@@ -83,7 +83,7 @@ class PostManager extends Manager
     {
       $chapters = [];
       
-      $request = $this->_dataBase->prepare('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments FROM chapter ORDER BY id');
+      $request = $this->_dataBase->prepare('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments, isDeleted FROM chapter ORDER BY id');
       $request->execute();
       
       while ($data = $request->fetch(\PDO::FETCH_ASSOC))

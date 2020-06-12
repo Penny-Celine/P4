@@ -17,7 +17,7 @@
                 selector: 'textarea',
                 plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
                 toolbar_mode: 'floating',
-                toolbar: 'undo redo | styleselect | bold italic underline | h5 h6 | alignleft aligncenter alignright alignjustify | outdent indent'
+                toolbar: 'undo redo | styleselect | bold italic underline | h5 h6 | backcolor forecolor | alignleft aligncenter alignright alignjustify | outdent indent'
             });
         </script>
         <?= 

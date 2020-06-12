@@ -16,40 +16,47 @@
         }
 
         public function display() {
-            ob_start();
-            $bigTitle = 'Edition de Chapitres';
             $chapters = $this->_manager->getList();
-            require 'src/view/headerTemplate.php';
-            $this->_viewRenderer->render('editorView.php', $chapters);
-            $pageContent = ob_get_clean();
-            require 'src/view/layout.php';
-
             if ($_SERVER['REQUEST_METHOD'] == 'POST')
             {
-               $stringPost = implode("", $_POST);
-               if (preg_match('#^save-chapter(\d)+$#', $stringPost))
+               if (isset($_POST['update']))
                {
-                   echo 'trouvé'; 
+                   if (isset($_POST['id']))
+                   {
+                       $chapterId = (int)$_POST['id'];
+                       $chapterTitle = $chapters[$chapterId]->title();
+                       $chapterContent = $chapters[$chapterId]->content();
+                       $message = 'Vous pouvez modifier le chapitre ayant l\'Id : '. $chapterId; 
+                   } else
+                   {
+                       $message = 'Veuillez selectionner le chapitre à modifier avant de valider.';
+                   }
+               } else if (isset($_POST['delete']))
+               {
+                    if (isset($_POST['id']))
+                    {
+                        $chapterId = (int)$_POST['id'];
+                        $chapterToDel = $this->_manager->getPost($chapterId);
+                        $this->_manager->delete($chapterToDel);
+                        $message = 'Vous avez bien supprimé le chapitre ayant pour Id : '. $chapterId;
+                    }
                }
             }
 
+            ob_start();
+            $bigTitle = 'Edition de Chapitres';
+            
+            require 'src/view/headerTemplate.php';
+            require 'src/view/editorView.php';
+            //$this->_viewRenderer->render('editorView.php', $chapters);
+            $pageContent = ob_get_clean();
+            require 'src/view/layout.php';
         }
 
 
         public function createChapter() {
-
-            ob_start();
-            $bigTitle = 'Nouveau Chapitre';
-            require 'src/view/headerTemplate.php';
-            require 'src/view/newChapterView.php';
-            //récupération de $message qui ne fonctionne pas actuellement
-
-
             
-            $pageContent = ob_get_clean();
-            include 'src/view/layout.php';
-
-            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-chapter']) && isset($_POST['content']))
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-chapter']) && isset($_POST['content']) && $_POST['content']!='')
             {
 
                 $today = date('Y-m-d');
@@ -59,8 +66,8 @@
                     'content' => $_POST['content'], 
                     'creationDate' => $today, 
                     'modifiedDate' => '', 
-                    'enableComments' => true,
-                    'isDeleted' => false]);
+                    'enableComments' => "Oui",
+                    'isDeleted' => "Non"]);
 
                 if ($this->_manager->exists($_POST['title']))
                 {
@@ -77,5 +84,23 @@
                     echo 'Message : Votre chapitre a bien été enregistré.';
                 }
             }
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-chapter']) && isset($_POST['content']) && $_POST['content']=='')
+            {
+                unset($chapter);
+                $message = 'Vous devez remplir le contenu du chapitre avant de l\'enregistrer.';
+                echo 'Message : Vous devez remplir le contenu du chapitre avant de l\'enregistrer.';
+            }
+
+            ob_start();
+            $bigTitle = 'Nouveau Chapitre';
+            require 'src/view/headerTemplate.php';
+            require 'src/view/newChapterView.php';
+            //récupération de $message qui ne fonctionne pas actuellement
+
+
+
+            $pageContent = ob_get_clean();
+            include 'src/view/layout.php';
+
         }
     }

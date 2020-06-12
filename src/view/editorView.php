@@ -24,14 +24,14 @@
               
               for ($i=0; isset($chapters[$i]); $i ++)
               {
-                  if (!$chapters[$i]->isDeleted() || $chapters[$i]->isDeleted() === 0)
+                  if ($chapters[$i]->isDeleted() === 'Non')
                   {
                       echo  '<tr>
-                          <td><input type="submit" value="Modifier" name="change-chapter' . $chapters[$i]->id() .'" />';
+                          <td><input type="radio" name="id" value=' . $chapters[$i]->id() .' />';
 
-                  } else 
+                  } else
                   {
-                      echo '<tr class=\'deleted\'>
+                      echo '<tr class="table-danger">
                           <td> Supprimé </td>';
                         
                   }
@@ -48,16 +48,17 @@
               ?>
             </tbody>
           </table>
-          
+          <input type="submit" value="Modifier" name="update" /> <input type="submit" value="Supprimer" name="delete"/><br/>
         </section>
       </form>
       <div class="row">
         <section class="col-12 col-lg-12">
           <div clas='row'>
+            <p>Message : <?= $message ?? ''?></p>  
             <form action="" method="post">
                 <h3 class='offset-3 col-6'>Modifier Chapitre :</h3><br/>
                 <p>
-                    <label for="title">Titre du Chapitre : </label><input type="text" name="title" maxlength="255" value="<?= $chapterTitle ?? ''?>"/></br>
+                    <label for="title">Titre du Chapitre : </label><input type="text" name="title" maxlength="255" value="<?= $chapterTitle ?? ''?>"/><br/>
                     <label for="content">Contenu : </label><textarea name="content"><?= $chapterContent ?? ''?></textarea><br/>
                     <input type="submit" value="Enregistrer ce chapitre" name="save-change" />
                 </p>

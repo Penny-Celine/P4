@@ -102,12 +102,12 @@ class Post
 
     public function setIsDeleted($isDeleted) {
 
-        if ($isDeleted === 1)
+        if ($isDeleted === 'Oui')
         {
-            $this->_isDeleted = true;
+            $this->_isDeleted = 'Oui';
         } else
         {
-            $this->_isDeleted = false;
+            $this->_isDeleted = 'Non';
         }
     }
 

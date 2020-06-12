@@ -10,7 +10,7 @@
       <ul class="nav navbar-nav col-12 col-lg-12">
         <?php 
         //ici, penser à changer la condition après la prise en charge de la session
-            if (isset($_GET['page']) && $_GET['page']=='connexion' || $_GET['page']=='nouveau_chapitre')
+            if (isset($_GET['page']) && ($_GET['page']=='connexion' || $_GET['page']=='nouveau_chapitre'))
             {
               echo('
               <li> <a href="index.php" class="btn-dark col-3 col-lg-3">Retour à l\'Accueil
