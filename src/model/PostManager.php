@@ -63,7 +63,7 @@ class PostManager extends Manager
     {
       if (is_int($info))
       {
-        $request = $this->_dataBase->query('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments, isDeleted FROM chapter WHERE id = '.$info );
+        $request = $this->_dataBase->query('SELECT * FROM chapter WHERE id = '.$info );
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         
         return new Post($data);
@@ -72,7 +72,7 @@ class PostManager extends Manager
 
     public function getLastPost()
     {
-        $request = $this->_dataBase->query('SELECT id, userId, title, content, creationDate, modifiedDate, enableComments FROM chapter WHERE isDeleted = "Non" ORDER BY id DESC LIMIT 1');
+        $request = $this->_dataBase->query('SELECT * FROM chapter WHERE isDeleted = "Non" ORDER BY id DESC LIMIT 1');
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         
         return new Post($data);

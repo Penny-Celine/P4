@@ -23,10 +23,11 @@
                {
                    if (isset($_POST['id']))
                    {
-                       $chapterId = (int)$_POST['id'];
-                       $chapterTitle = $chapters[$chapterId]->title();
-                       $chapterContent = $chapters[$chapterId]->content();
-                       $message = 'Vous pouvez modifier le chapitre ayant l\'Id : '. $chapterId; 
+                       $selectedChapterId = (int)$_POST['id'];
+                       $chapterToChange = $this->_manager->getPost($selectedChapterId);
+                       $chapterTitle = $chapterToChange->title();
+                       $chapterContent = $chapterToChange->content();
+                       $message = 'Vous pouvez modifier le chapitre ayant l\'Id : '. $selectedChapterId; 
                    } else
                    {
                        $message = 'Veuillez selectionner le chapitre à modifier avant de valider.';
