@@ -18,7 +18,7 @@
             
             for ($i=0; isset($chapters[$i]); $i ++)
                 {
-                    if (!$chapters[$i]->isDeleted() || $chapters[$i]->isDeleted() === 0)
+                    if ($chapters[$i]->isDeleted() === 'Non')
                     {
                         echo  '<tr>
                             <td>' . $chapters[$i]->id() . '</td>

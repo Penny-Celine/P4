@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class Post 
+class Post extends Hydratation
 {
     private $_id;
     private $_userId;
@@ -83,7 +83,7 @@ class Post
     }
 
     public function setModifiedDate($modifiedDate) {
-        if (preg_match('#^\d{4}\-((0\d)|(1[0-2]))\-[0-3]\d$#', $modifiedDate) || $modifiedDate == '')
+        if (preg_match('#^\d{4}\-((0\d)|(1[0-2]))\-[0-3]\d ([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$#', $modifiedDate) || $modifiedDate == '')
         {
             $this->_modifiedDate = $modifiedDate;
         }
@@ -108,25 +108,6 @@ class Post
         } else
         {
             $this->_isDeleted = 'Non';
-        }
-    }
-
-
-    //hydratation (parce que c'est important!)
-
-    public function hydrate(array $data)
-    {
-        foreach ($data as $key => $value)
-        {
-            // On récupère le nom du setter correspondant à l'attribut.
-            $method = 'set'.ucfirst($key);
-                
-            // Si le setter correspondant existe.
-            if (method_exists($this, $method))
-            {
-            // On appelle le setter.
-            $this->$method($value);
-            }
         }
     }
 

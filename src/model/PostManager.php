@@ -19,8 +19,8 @@ class PostManager extends Manager
     public function add(Post $chapter){
 
         $request = $this->_dataBase->prepare('INSERT INTO chapter 
-            (`userId`, `title`, `content`, `creationDate`, `modifiedDate`, `enableComments`) 
-            VALUES (:userId, :title, :content, :creationDate, :modifiedDate, :enableComments)');
+            (`userId`, `title`, `content`, `creationDate`, `modifiedDate`, `enableComments`, `isDeleted`) 
+            VALUES (:userId, :title, :content, :creationDate, :modifiedDate, :enableComments, :isDeleted)');
 
         $request->bindValue(':userId', $chapter->userId(), \PDO::PARAM_INT);
         $request->bindValue(':title', $chapter->title());
@@ -28,12 +28,11 @@ class PostManager extends Manager
         $request->bindValue(':creationDate', $chapter->creationDate());
         $request->bindValue(':modifiedDate', $chapter->modifiedDate());
         $request->bindValue(':enableComments', $chapter->enableComments());
+        $request->bindValue(':isDeleted', $chapter->isDeleted());
         $request->execute();
 
         $chapter->hydrate([
             'id' => $this->_dataBase->lastInsertId(),
-
-            'isDeleted' => "Non",
         ]);
 
     }
@@ -72,7 +71,7 @@ class PostManager extends Manager
 
     public function getLastPost()
     {
-        $request = $this->_dataBase->query('SELECT * FROM chapter WHERE isDeleted = "Non" ORDER BY id DESC LIMIT 1');
+        $request = $this->_dataBase->query('SELECT * FROM chapter WHERE isDeleted = "Non" ORDER BY creationDate DESC LIMIT 1');
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         
         return new Post($data);

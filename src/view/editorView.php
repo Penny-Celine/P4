@@ -1,5 +1,25 @@
-
-
+    <div class="row">
+      <section class="col-12 col-lg-12">
+        <div clas='row'>
+          <p>Message : <?= $message ?? ''?></p>  
+          <form action="" method="post">
+            <h3 class='offset-3 col-6'>Modifier Chapitre :</h3><br/>
+            <p> <?php
+                if (!isset($chapterId))
+                {
+                  echo '<span>Sélectionnez le Chapitre à modifier dans la liste plus bas</span><br/>';
+                }
+                ?>
+                <label for="newTitle">Titre du Chapitre : </label><input type="text" name="newTitle" maxlength="255" value="<?= $chapterTitle ?? ''?>"/><br/>
+                <label for="newContent">Contenu : </label><textarea name="newContent"><?= $chapterContent ?? ''?></textarea><br/>
+                <input type="hidden" name="chapterId" value="<?= $chapterId ?? '' ?>"/>
+                <input type="submit" value="Enregistrer les modifications" name="save-change" />
+              </p>
+          </form>
+        </div>
+      </section>
+    </div>  
+    
     <div class="row">
       <form method='post'>
         <section class="col-12 col-lg-12 table-responsive">
@@ -51,21 +71,7 @@
           <input type="submit" value="Modifier" name="update" /> <input type="submit" value="Supprimer" name="delete"/><br/>
         </section>
       </form>
-      <div class="row">
-        <section class="col-12 col-lg-12">
-          <div clas='row'>
-            <p>Message : <?= $message ?? ''?></p>  
-            <form action="" method="post">
-                <h3 class='offset-3 col-6'>Modifier Chapitre :</h3><br/>
-                <p>
-                    <label for="title">Titre du Chapitre : </label><input type="text" name="title" maxlength="255" value="<?= $chapterTitle ?? ''?>"/><br/>
-                    <label for="content">Contenu : </label><textarea name="content"><?= $chapterContent ?? ''?></textarea><br/>
-                    <input type="submit" value="Enregistrer ce chapitre" name="save-change" />
-                </p>
-            </form>
-          </div>
-        </section>
-      </div>  
+      
     </div>
       
 

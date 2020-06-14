@@ -5,11 +5,11 @@
     class EditorController
     {
         private $_manager;
-        public $message;
+        //private $_viewRenderer;
 
         public function __construct() {
             $this->_manager = new \App\Model\PostManager();
-            $this->_viewRenderer = new \App\Services\ViewRenderer();
+            //$this->_viewRenderer = new \App\Services\ViewRenderer();
 
             $pageTitle = 'Edition de Chapitres';
             $pageDescription = 'Page réservée au rédacteur du site. Edition de chapitres du livre Billet pour l\'Alaska';
@@ -17,17 +17,19 @@
 
         public function display() {
             $chapters = $this->_manager->getList();
-            if ($_SERVER['REQUEST_METHOD'] == 'POST')
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update']) || $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete']))
             {
                if (isset($_POST['update']))
                {
                    if (isset($_POST['id']))
                    {
-                       $selectedChapterId = (int)$_POST['id'];
-                       $chapterToChange = $this->_manager->getPost($selectedChapterId);
-                       $chapterTitle = $chapterToChange->title();
-                       $chapterContent = $chapterToChange->content();
-                       $message = 'Vous pouvez modifier le chapitre ayant l\'Id : '. $selectedChapterId; 
+                        $selectedChapterId = (int)$_POST['id'];
+                        $chapterToChange = $this->_manager->getPost($selectedChapterId);
+                        $chapterTitle = $chapterToChange->title();
+                        $chapterContent = $chapterToChange->content();
+                        $chapterId = $chapterToChange->id();
+                        $message = 'Vous pouvez modifier le chapitre ayant l\'Id : '. $selectedChapterId;
+
                    } else
                    {
                        $message = 'Veuillez selectionner le chapitre à modifier avant de valider.';
@@ -42,6 +44,24 @@
                         $message = 'Vous avez bien supprimé le chapitre ayant pour Id : '. $chapterId;
                     }
                }
+            } else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-change']) && isset($_POST['newTitle']))
+            {
+                if (isset($_POST['newContent']))
+                {
+                    $now = date('Y-m-d H:i:s');
+                    $newTitle = $_POST['newTitle'];
+                    $newContent = $_POST['newContent'];
+                    $chapterToChangeId = (int)$_POST['chapterId'];
+                    $chapterToChange = $this->_manager->getPost($chapterToChangeId);
+                    $chapterToChange->setTitle($newTitle);
+                    $chapterToChange->setContent($newContent);
+                    $chapterToChange->setModifiedDate($now);
+                    $this->_manager->update($chapterToChange);
+                    $message = 'Vos modifications ont bien été enregistrées.';
+                } else
+                {
+                    $message = 'Le contenu ne peut pas être vide.';
+                }  
             }
 
             ob_start();
@@ -75,31 +95,24 @@
                     //modif de $message
                     $message = 'Ce titre est déjà pris';
                     unset($chapter);
-                    echo 'Message : Ce titre est déjà pris.';
                 }
                 else
                 {
                     $this->_manager->add($chapter);
                     //modif de $message
                     $message = 'Votre chapitre a bien été enregistré';
-                    echo 'Message : Votre chapitre a bien été enregistré.';
                 }
             }
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-chapter']) && isset($_POST['content']) && $_POST['content']=='')
             {
                 unset($chapter);
                 $message = 'Vous devez remplir le contenu du chapitre avant de l\'enregistrer.';
-                echo 'Message : Vous devez remplir le contenu du chapitre avant de l\'enregistrer.';
             }
 
             ob_start();
             $bigTitle = 'Nouveau Chapitre';
             require 'src/view/headerTemplate.php';
             require 'src/view/newChapterView.php';
-            //récupération de $message qui ne fonctionne pas actuellement
-
-
-
             $pageContent = ob_get_clean();
             include 'src/view/layout.php';
 
