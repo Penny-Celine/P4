@@ -30,5 +30,24 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <h3 class="col-12 col-lg-12">Commentaires</h3><br/>
+      </div>
+      <div class="row">
+        <p col-12 col-lg-12>
+          <?php
+            for ($i=0; isset($orderedComments[$i]); $i ++)
+              {
+
+              echo 'Id :' .$orderedComments[$i]->id(). ' ';
+              echo 'Id Auteur :' .$orderedComments[$i]->userId(). '<br/> ';
+              echo 'Commentaire :' .$orderedComments[$i]->message(). '<br/> ';
+              echo 'Ecrit le :' .$orderedComments[$i]->creationDate(). ' ';
+              //echo 'Déjà modéré ?' .$orderedComments[$i]->isModified(). ' ';
+              //echo 'Reporté ?' .$orderedComments[$i]->isReported(). ' ';
+              }
+          ?>
+        </p>
+      </div>
     </div>
 

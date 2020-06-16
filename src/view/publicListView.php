@@ -23,7 +23,7 @@
                         echo  '<tr>
                             <td>' . $chapters[$i]->id() . '</td>
                             <td>' . $chapters[$i]->userId() . '</td>
-                            <td>' . $chapters[$i]->title() . '</td>
+                            <td><a href="?page=chapitre&id='. $chapters[$i]->id() .'">'  . $chapters[$i]->title() . '</a></td>
                             <td>' . $chapters[$i]->content() . '</td>
                             <td>' . $chapters[$i]->creationDate() . '</td>
                             <td>' . $chapters[$i]->modifiedDate() . '</td>

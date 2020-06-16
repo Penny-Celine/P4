@@ -117,4 +117,8 @@
             include 'src/view/layout.php';
 
         }
+
+        public function moderate() {
+            
+        }
     }

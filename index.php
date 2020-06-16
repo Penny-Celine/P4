@@ -23,8 +23,11 @@ if (isset($_GET['page'])) {
         case 'nouveau_chapitre' :
             $page->displayTextEditor();
             break;
+        case 'chapitre':
+            $page->displayAChapter();
+            break;
         default:
-            throw new \Exception('404 : Page non trouvée');
+            echo'Page non trouvée';
     
     }
 }
