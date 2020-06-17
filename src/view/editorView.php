@@ -1,7 +1,10 @@
+  <section class="container">
     <div class="row">
-      <section class="col-12 col-lg-12">
-        <div clas='row'>
-          <p>Message : <?= $message ?? ''?></p>  
+      <div class="col-12 col-lg-12">
+        <p>Message : <?= $message ?? ''?></p>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-12">
           <form action="" method="post">
             <h3 class='offset-3 col-6'>Modifier Chapitre :</h3><br/>
             <p> <?php
@@ -17,13 +20,13 @@
               </p>
           </form>
         </div>
-      </section>
+      </div>
     </div>  
     
     <div class="row">
       <form method='post'>
-        <section class="col-12 col-lg-12 table-responsive">
-          <table class="table table-dark table-bordered table-striped">
+        <section class="container">
+          <table class="table-sm table-dark table-bordered table-striped">
             <caption class="top-caption">
               <h4>Liste des Chapitres</h4>
             </caption>
@@ -32,11 +35,11 @@
                 <th scope="col"></th>
                 <th scope="col">ID</th>
                 <th scope="col">Auteur</th>
-                <th scope="col">Titre</th>
+                <th scope="col">Titre du Chapitre</th>
                 <th scope="col">Contenu</th>
                 <th scope="col">Date de Création</th>
                 <th scope="col">Modifié le</th>
-                <th scope="col">Commentaires Activés</th>
+                <th scope="col">Comment. Activés</th>
               </tr>
             </thead>
             <tbody>
@@ -52,7 +55,7 @@
                   } else
                   {
                       echo '<tr class="table-danger">
-                          <td> Supprimé </td>';
+                          <td><input type="radio" name="id" value=' . $chapters[$i]->id() .' />Suppr.</td>';
                         
                   }
                   echo '<td>' . $chapters[$i]->id() . '</td>
@@ -71,8 +74,8 @@
           <input type="submit" value="Modifier" name="update" /> <input type="submit" value="Supprimer" name="delete"/><br/>
         </section>
       </form>
-      
     </div>
+  </section>
       
 
 

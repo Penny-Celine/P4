@@ -5,6 +5,8 @@
     class EditorController
     {
         private $_manager;
+        private $_commentDb;
+
         //private $_viewRenderer;
 
         public function __construct() {
@@ -119,6 +121,61 @@
         }
 
         public function moderate() {
-            
+
+            $this->_commentDb = new \App\Model\CommentManager();
+            $reportedComments = $this->_commentDb->getReportedList();
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update']) || $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete']))
+            {
+               if (isset($_POST['update']))
+               {
+                   if (isset($_POST['id']))
+                   {
+                        $selectedCommentId = (int)$_POST['id'];
+                        $commentToChange = $this->_commentDb->getComment($selectedCommentId);
+                        $commentAuthor = $commentToChange->author();
+                        $commentContent = $commentToChange->content();
+                        $commentId = $commentToChange->id();
+                        $message = 'Vous pouvez modifier le commentaire ayant l\'Id : '. $selectedCommentId;
+
+                   } else
+                   {
+                       $message = 'Veuillez selectionner le commentaire à modifier avant de valider.';
+                   }
+               } else if (isset($_POST['delete']))
+               {
+                    if (isset($_POST['id']))
+                    {
+                        $commentId = (int)$_POST['id'];
+                        $commentToDel = $this->_commentDb->getComment($commentId);
+                        $this->_commentDb->delete($commentToDel);
+                        $message = 'Vous avez bien supprimé le commentaire ayant pour Id : '. $commentId;
+                    }
+               }
+            } else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-change']))
+            {
+                if (isset($_POST['newContent']))
+                {
+
+
+                    $newContent = $_POST['newContent'];
+                    $commentToChangeId = (int)$_POST['commentId'];
+                    $commentToChange = $this->_comment->getComment($commentToChangeId);
+                    $commentToChange->setContent($newContent);
+                    $commentToChange->setIsModerated(true);
+                    $this->_commentDb->update($commentToChange);
+                    $message = 'Vos modifications ont bien été enregistrées.';
+                } else
+                {
+                    $message = 'Le contenu ne peut pas être vide.';
+                }  
+            }
+
+            ob_start();
+
+            require 'src/view/headerTemplate.php';
+            require 'src/view/moderationView.php';
+            $pageContent = ob_get_clean();
+            include 'src/view/layout.php';          
         }
     }

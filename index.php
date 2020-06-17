@@ -26,6 +26,9 @@ if (isset($_GET['page'])) {
         case 'chapitre':
             $page->displayAChapter();
             break;
+        case 'moderation' :
+            $page->displayCommentList();
+            break;
         default:
             echo'Page non trouvée';
     

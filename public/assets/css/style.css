@@ -2,6 +2,7 @@ body {
     padding-top: 10px;
     font-family: 'Old Standard TT', serif;
     font-size: 1.5em;
+    word-wrap: break-word;
 }
 
 h1 {
@@ -18,11 +19,15 @@ nav {
 }
 nav a{
     text-align: center;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 .navbar-nav{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    margin: 3px;
+    line-height: 2.5em;
 }
 .btn-dark{
     border-radius: 25px;
@@ -45,6 +50,17 @@ blockquote {
 .top-caption {
     caption-side: top;
 }
+
+table {
+    font-size: 0.8em;
+    line-height: 1em;
+    word-wrap: break-word;
+}
+
+table td {
+    word-break: break-all;
+}
+
 
 .table-danger {
     color: black;

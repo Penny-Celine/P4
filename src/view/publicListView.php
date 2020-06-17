@@ -1,5 +1,5 @@
-<section class="col-12 col-lg-12 table-responsive">
-    <table class="table table-dark table-bordered table-striped">
+<section class="container col-12 col-lg-12">
+    <table class="table-sm table-dark table-bordered table-striped">
         <caption class="top-caption">
             <h4>Liste des Chapitres</h4>
         </caption>

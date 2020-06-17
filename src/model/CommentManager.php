@@ -19,14 +19,15 @@ class CommentManager extends Manager
     public function add(Comment $comment){
 
         $request = $this->_dataBase->prepare('INSERT INTO comment 
-            (`userId`, `chapterId`, `creationDate`, `message`, `isModified`, `isReported`) 
-            VALUES (:userId, :chapterId, :creationDate, :message, :isModified, :isReported)');
+            (`userId`, `author`, `chapterId`, `creationDate`, `content`, `isModerated`, `isReported`) 
+            VALUES (:userId,:author, :chapterId, :creationDate, :content, :isModerated, :isReported)');
 
         $request->bindValue(':userId', $comment->userId(), \PDO::PARAM_INT);
+        $request->bindValue(':author', $comment->author());
         $request->bindValue(':chapterId', $comment->chapterId());
         $request->bindValue(':creationDate', $comment->creationDate());
-        $request->bindValue(':message', $comment->message());        
-        $request->bindValue(':isModified', $comment->isModified());
+        $request->bindValue(':content', $comment->content());        
+        $request->bindValue(':isModerated', $comment->isModerated());
         $request->bindValue(':isReported', $comment->isReported());
         $request->execute();
 
@@ -53,7 +54,7 @@ class CommentManager extends Manager
 
     public function delete(Comment $comment)
     {
-        $request = $this->_dataBase->prepare('DELETE comment WHERE id = :id');
+        $request = $this->_dataBase->prepare('DELETE FROM comment WHERE id = :id');
         $request->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
         $request->execute();
     }
@@ -111,7 +112,7 @@ class CommentManager extends Manager
     {
         $comments = [];
         
-        $request = $this->_dataBase->prepare('SELECT * FROM comment ORDER BY chapterId, creationDate WHERE isReported = true');
+        $request = $this->_dataBase->prepare('SELECT * FROM comment WHERE isReported = true ORDER BY chapterId, creationDate');
         $request->execute();
         
         while ($data = $request->fetch(\PDO::FETCH_ASSOC))
@@ -124,10 +125,10 @@ class CommentManager extends Manager
     
     public function update(Comment $comment)
     {
-        $request = $this->_dataBase->prepare('UPDATE comment SET message = :message, 
+        $request = $this->_dataBase->prepare('UPDATE comment SET content = :content, 
                                             isModified = true, isReported = false WHERE id = :id');
         
-        $request->bindValue(':message', $comment->message());
+        $request->bindValue(':content', $comment->content());
         $request->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
         
         $request->execute();

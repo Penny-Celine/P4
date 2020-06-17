@@ -53,7 +53,20 @@ class PostManager extends Manager
 
     public function delete(Post $chapter)
     {
-      $request = $this->_dataBase->prepare('UPDATE chapter SET isDeleted = "Oui" WHERE id = :id');
+      if ($chapter->isDeleted()!=null && $chapter->isDeleted()==="Non")
+      {
+        $request = $this->_dataBase->prepare('UPDATE chapter SET isDeleted = "Oui" WHERE id = :id');
+        $request->bindValue(':id', $chapter->id(), \PDO::PARAM_INT);
+        $request->execute();
+      }else if ($chapter->isDeleted()!=null && $chapter->isDeleted()==="Oui")
+      {
+        $this->definitiveDelete($chapter);
+      }
+    }
+
+    public function definitiveDelete(Post $chapter)
+    {
+      $request = $this->_dataBase->prepare('DELETE FROM chapter WHERE id = :id');
       $request->bindValue(':id', $chapter->id(), \PDO::PARAM_INT);
       $request->execute();
     }
@@ -89,7 +102,6 @@ class PostManager extends Manager
       {
         $chapters[] = new Post($data);
       }
-      
       return $chapters;
     }
     

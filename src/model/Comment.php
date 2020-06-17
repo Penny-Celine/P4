@@ -6,9 +6,10 @@ class Comment extends Hydratation
 {
     private $_id;
     private $_userId;
+    private $_author;
     private $_chapterId;
     private $_creationDate;
-    private $_message;
+    private $_content;
     private $_isModerated;
     private $_isReported;
 
@@ -26,6 +27,10 @@ class Comment extends Hydratation
         return $this->_userId;
     }
 
+    public function author() {
+        return $this->_author;
+    }
+
     public function chapterId() {
         return $this->_chapterId;
     }
@@ -34,8 +39,8 @@ class Comment extends Hydratation
         return $this->_creationDate;
     }
 
-    public function message() {
-        return $this->_message;
+    public function content() {
+        return $this->_content;
     }
 
     public function isModerated() {
@@ -56,6 +61,13 @@ class Comment extends Hydratation
         $this->_userId = (int) $userId;
     }
 
+    public function setAuthor($author) {
+        if (is_string($author))
+        {
+            $this->_author = $author;
+        }
+    }
+
     public function setChapterId($chapterId) {
         $this->_chapterId = (int) $chapterId;
     }
@@ -67,10 +79,10 @@ class Comment extends Hydratation
         }
     }
 
-    public function setMessage($message) {
-        if (is_string($message))
+    public function setContent($content) {
+        if (is_string($content))
         {
-            $this->_message = $message;
+            $this->_content = $content;
         }
     }
 
