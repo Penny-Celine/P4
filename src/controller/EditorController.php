@@ -18,7 +18,7 @@
         }
 
         public function display() {
-            $chapters = $this->_manager->getList();
+
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update']) || $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete']))
             {
                if (isset($_POST['update']))
@@ -63,8 +63,9 @@
                 } else
                 {
                     $message = 'Le contenu ne peut pas être vide.';
-                }  
+                }
             }
+            $chapters = $this->_manager->getList();
 
             ob_start();
             $bigTitle = 'Edition de Chapitres';
@@ -123,7 +124,7 @@
         public function moderate() {
 
             $this->_commentDb = new \App\Model\CommentManager();
-            $reportedComments = $this->_commentDb->getReportedList();
+
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update']) || $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete']))
             {
@@ -170,6 +171,8 @@
                     $message = 'Le contenu ne peut pas être vide.';
                 }  
             }
+
+            $reportedComments = $this->_commentDb->getReportedList();
 
             ob_start();
 

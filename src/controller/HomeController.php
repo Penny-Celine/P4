@@ -15,6 +15,8 @@ class HomeController
         $this->_chapterDb = new \App\Model\PostManager();
         $this->_commentDb = new \App\Model\CommentManager();
         $this->_lastChapter = $this->_chapterDb->getLastPost();
+        $this->comment();
+        $this->reportComment();
         $lastChapterId = (int)$this->_lastChapter->id();
         $orderedComments = $this->_commentDb->getCommentsOrdered($lastChapterId);
 
@@ -23,10 +25,10 @@ class HomeController
         $lastChapterTitle = $this->_lastChapter->title();
         $lastChapterCreationDate = $this->_lastChapter->creationDate();
         $lastChapterContent = $this->_lastChapter->content();
-        $this->comment();
-        $this->reportComment();
+        $chapterId = $this->_lastChapter->id();
 
         require 'src/view/homeView.php';
+
         $pageContent = ob_get_clean();
         include 'src/view/layout.php';
 
@@ -62,6 +64,8 @@ class HomeController
         {
             $this->_chapterDb = new \App\Model\PostManager();
             $this->_commentDb = new \App\Model\CommentManager();
+            $this->comment();
+            $this->reportComment();
             
             ob_start();
             $chapterId = (int)$_GET['id'];
@@ -71,11 +75,7 @@ class HomeController
             $creationDate = $chapter->creationDate();
             $modifiedDate = $chapter->modifiedDate();
             $content = $chapter->content();
-            require 'src/view/headerTemplate.php';
-            //ajout des commentaires            
-            $this->comment();
-            $this->reportComment();
-
+            require 'src/view/headerTemplate.php';           
             require 'src/view/chapterView.php';
             $pageContent = ob_get_clean();
             require 'src/view/layout.php';
@@ -108,7 +108,8 @@ class HomeController
                         'isReported' => 0]);    
           
                     $this->_commentDb->add($comment);
-                     $message = 'Votre commentaire a été ajouté avec succès !';
+                    $message = 'Votre commentaire a été ajouté avec succès !';
+                    return $message;
                  } else 
                 {
                     $message = 'Un problème est survenu. Veuillez recommencer.';
@@ -124,6 +125,7 @@ class HomeController
             unset($comment);
             $message = 'Vous ne pouvez pas poster un commentaire vide';
         }
+      
     }
 
     public function reportComment()
