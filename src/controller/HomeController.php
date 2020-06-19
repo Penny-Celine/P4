@@ -7,6 +7,7 @@ class HomeController
     private $_chapterDb;
     private $_lastChapter;
     private $_commentDb;
+    private $_userDb;
 
 
 
@@ -14,6 +15,7 @@ class HomeController
     {
         $this->_chapterDb = new \App\Model\PostManager();
         $this->_commentDb = new \App\Model\CommentManager();
+        $this->_userDb = new \App\Model\UserManager();
         $this->_lastChapter = $this->_chapterDb->getLastPost();
         $this->comment();
         $this->reportComment();
@@ -47,6 +49,7 @@ class HomeController
 
     public function displayLoginPage()
     {
+
         $editorPage = new EditorController();
         $editorPage->display();
 

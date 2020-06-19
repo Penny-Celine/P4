@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 require('vendor/autoload.php');
 require('src/config/dev.php');
 
