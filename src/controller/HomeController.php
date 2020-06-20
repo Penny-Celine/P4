@@ -38,20 +38,27 @@ class HomeController
 
     public function displayChaptersList()
     {
-        $this->_chapterDb = new \App\Model\PostManager();
-        ob_start();
-            $chapters = $this->_chapterDb->getList();
-            require 'src/view/headerTemplate.php';
-            require 'src/view/publicListView.php';
+        if (isset($_SESSION['privilege']) && $_SESSION['privilege'] === 'admin')
+        {
+            $editorPage = new EditorController();
+            $editorPage->display();
+        } else
+        {
+            $this->_chapterDb = new \App\Model\PostManager();
+            ob_start();
+                $chapters = $this->_chapterDb->getList();
+                require 'src/view/headerTemplate.php';
+                require 'src/view/publicListView.php';
             $pageContent = ob_get_clean();
             require 'src/view/layout.php';
+        }
+
     }
 
     public function displayLoginPage()
     {
-
-        $editorPage = new EditorController();
-        $editorPage->display();
+ 
+        $this->connect();   
 
     }
 
@@ -98,11 +105,20 @@ class HomeController
         {
             if (isset($_POST['author']) && $_POST['author']!='')
             {
+                $this->_userDb = new \App\Model\UserManager();
+                if (isset($_SESSION['user']) && $_SESSION['user'] === $_POST['author'] && $this->_userDb->exists($_POST['author']))
+                {
+                    $author = $this->_userDb->getUser($_POST['author']);
+                    $userId = $author->id();
+                } else
+                {
+                    $userId = 2;
+                }
                 if (isset($_POST['chapterId']) && $_POST['chapterId']!='')
                 {
                     $today = date('Y-m-d');
                     $comment = new \App\Model\Comment(['id' => 0,
-                        'userId' => 2, 
+                        'userId' => $userId, 
                         'author' => htmlspecialchars($_POST['author']), 
                         'chapterId' => (int)$_POST['chapterId'],
                         'creationDate' => $today,
@@ -112,7 +128,6 @@ class HomeController
           
                     $this->_commentDb->add($comment);
                     $message = 'Votre commentaire a été ajouté avec succès !';
-                    return $message;
                  } else 
                 {
                     $message = 'Un problème est survenu. Veuillez recommencer.';
@@ -134,17 +149,118 @@ class HomeController
     public function reportComment()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['report']))
-               {
-                    if (isset($_POST['commentId']))
-                    {
-                        $commentId = (int)$_POST['commentId'];
-                        $commentToReport = $this->_commentDb->getComment($commentId);
-                        $this->_commentDb->report($commentToReport);
-                        $message = 'Vous avez bien signalé le commentaire ayant pour Id : '. $commentId;
-                    }
-               }
+        {
+            if (isset($_POST['commentId']))
+            {
+                $commentId = (int)$_POST['commentId'];
+                $commentToReport = $this->_commentDb->getComment($commentId);
+                $this->_commentDb->report($commentToReport);
+                $message = 'Vous avez bien signalé le commentaire ayant pour Id : '. $commentId;
+            }
+        }
     }
 
+    public function connect()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['connect']))
+        {
+            if (isset($_POST['pseudo']) && isset($_POST['password']))
+            {
+                $pseudo = htmlSpecialChars($_POST['pseudo']);
+                $passwordToTest = $_POST['password'];
+                $this->_userDb = new \App\Model\UserManager();
+                if ($this->_userDb->exists($pseudo))
+                {
+                    $connectingUser = $this->_userDb->getUser($pseudo);
+                    $passToVerif = password_verify($passwordToTest, $connectingUser->password());
+                    if ($passToVerif)
+                    {
+                        $_SESSION['user'] = $pseudo;
+                        $_SESSION['privilege'] = $connectingUser->privilege();
+                        $message = 'Connexion réussie ! Bienvenue '.$pseudo.' !';
+                        $this->displayHomePage();
+                    }
+                    else
+                    {
+                        //Seul le "echo" est récupéré pour l'instant
+                        $message =  'Identifiant ou mot de passe incorrect';
+                        echo 'Identifiant ou mot de passe incorrect';
+                        ob_start();
+                            $bigTitle = 'Connexion';
+                            require 'src/view/headerTemplate.php';
+                            require 'src/view/loginView.php';
+                        $pageContent = ob_get_clean();
+                        require 'src/view/layout.php';
+                    }
+                }
+            }
+        }
+    }
+    public function displaySubscribePage()
+    {
+        $this->_userDb = new \App\Model\UserManager();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['subscribe']))
+        {
+            if (preg_match('#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#', $_POST['email']))
+            {
+                if ($_POST['password'] === $_POST['password2'])
+                {
+                    $today = date('Y-m-d');
+                    $newUser = new \App\Model\User(['id' => 0,
+                        'name' => $_POST['name'], 
+                        'pseudo' => $_POST['pseudo'],
+                        'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                        'email' => $_POST['email'], 
+                        'privilege' => '', 
+                        'subscribeDate' => $today,
+                        'isDeleted' => false]);
+
+                    if ($this->_userDb->exists($_POST['pseudo']))
+                    {
+                        //modif de $message
+                        $message = 'Ce pseudo est déjà pris';
+                        unset($newUser);
+                    }
+                    else
+                    {
+                        $this->_userDb->add($newUser);
+                        //modif de $message
+                        $message = 'Votre inscription a bien été enregistrée';
+                    }
+                } else
+                {
+                    $message = 'Les mots de passe ne correspondent pas';
+                }
+
+            } else
+            {
+                $message = 'Votre adresse mail n\'est pas valide.';
+            }
+
+        }
+
+
+        ob_start();
+                   
+            $bigTitle = 'Inscription';
+            require 'src/view/headerTemplate.php';
+            require 'src/view/subscribeView.php';
+        $pageContent = ob_get_clean();
+        require 'src/view/layout.php';
+    }
+
+    public function createChapter() {
+            
+        
+        ob_start();
+        $bigTitle = 'Nouveau Chapitre';
+        require 'src/view/headerTemplate.php';
+        require 'src/view/newChapterView.php';
+        $pageContent = ob_get_clean();
+        include 'src/view/layout.php';
+
+    }
 
 
 }

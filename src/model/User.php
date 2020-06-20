@@ -81,7 +81,7 @@ class User extends Hydratation
             $this->_privilege = $privilege;
         } else 
         {
-            $this->privilege = 'user';
+            $this->_privilege = 'user';
         }
     }
 

@@ -43,7 +43,7 @@
                     }
                     ?>
                     <p class="col-12 col-lg-12">
-                        <label for="author">Votre pseudo : </label><input type="text" name="author" maxlength="255" required/><br/>
+                        <label for="author">Votre pseudo : </label><input type="text" name="author" value="<?=$_SESSION['user'] ?? ''?>" maxlength="255" required/><br/>
                         <label for="content">Message : </label><textarea name="content"></textarea><br/>
                         <input type="hidden" name="chapterId" value="<?= $chapterId ?? ''?>"/>
                         <input type="submit" value="Enregistrer" name="post-comment" />

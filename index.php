@@ -30,6 +30,10 @@ if (isset($_GET['page'])) {
         case 'moderation' :
             $page->displayCommentList();
             break;
+        case 'deconnexion' :
+            session_destroy();
+            $page->displayHomePage();
+            break;
         default:
             echo'Page non trouvée';
     

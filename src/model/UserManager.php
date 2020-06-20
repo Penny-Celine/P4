@@ -19,15 +19,14 @@ class UserManager extends Manager
     public function add(User $user){
 
         $request = $this->_dataBase->prepare('INSERT INTO `user`(`name`, `pseudo`, `password`, `email`, `privilege`, `subscribeDate`, `isDeleted`)
-            VALUES (:userName, :pseudo, :userPassword, :email, :privilege, :subscribeDate, :isDeleted)');
+            VALUES (:name, :pseudo, :password, :email, :privilege, :subscribeDate, 0)');
 
-        $request->bindValue(':userName', $user->name());
+        $request->bindValue(':name', $user->name());
         $request->bindValue(':pseudo', $user->pseudo());
         $request->bindValue(':password', $user->password());
         $request->bindValue(':email', $user->email());
         $request->bindValue(':privilege', $user->privilege());
         $request->bindValue(':subscribeDate', $user->subscribeDate());
-        $request->bindValue(':isDeleted', $user->isDeleted());
         $request->execute();
 
         $user->hydrate([
@@ -72,13 +71,20 @@ class UserManager extends Manager
 
     public function getUser($info)
     {
-      if (is_int($info))
+      if (is_string($info))
       {
-        $request = $this->_dataBase->query('SELECT * FROM user WHERE id = '.$info );
+        $request = $this->_dataBase->prepare('SELECT * FROM user WHERE `pseudo` = :pseudo');
+        $request->bindValue(':pseudo', $info);
+        $request->execute();
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         
         return new User($data);
       }
+    }
+
+    public function verify($passwordToVerify)
+    {
+
     }
 
     
