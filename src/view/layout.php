@@ -25,7 +25,7 @@
         ?>
         <footer class= "row footer">
             <p class="col-12 col-lg-12">
-                Site développé par Céline Maupoux pour <a class="btn-dark" href="https://www.openclassrooms.com">OpenClassrooms</a> | <a class="btn-dark" href="siteMap.php">Plan du site</a> | <a class="btn-dark" href="legalNotice.php">Mentions légales</a>
+                Site développé par Céline Maupoux pour <a class="btn-dark" href="https://www.openclassrooms.com">OpenClassrooms</a> | <a class="btn-dark" href="?page=mentions">Mentions légales</a>
             </p>
         </footer>
     </body>

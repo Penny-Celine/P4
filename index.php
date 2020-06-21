@@ -34,6 +34,12 @@ if (isset($_GET['page'])) {
             session_destroy();
             $page->displayHomePage();
             break;
+        case 'mentions' :
+            $page->displayLegalPage();
+            break;
+        case 'contact' :
+            $page->displayContactPage();
+            break;
         default:
             echo'Page non trouvée';
     

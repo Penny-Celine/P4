@@ -57,9 +57,9 @@
                 <form action="" method="post">
                     <h4 class='offset-1 col-8'>Commenter :</h4><br/>
                     <?php
-                      if (isset($message))
+                      if (isset($errorMessage))
                       {
-                          echo '<p> Message :' . $message . '</p>';
+                          echo '<p> Message :' . $errorMessage . '</p>';
                       }
                     ?>
                     <p class="col-12 col-lg-12">

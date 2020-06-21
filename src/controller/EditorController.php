@@ -30,11 +30,11 @@
                         $chapterTitle = $chapterToChange->title();
                         $chapterContent = $chapterToChange->content();
                         $chapterId = $chapterToChange->id();
-                        $message = 'Vous pouvez modifier le chapitre ayant l\'Id : '. $selectedChapterId;
+                        $errorMessage = 'Vous pouvez modifier le chapitre ayant l\'Id : '. $selectedChapterId;
 
                    } else
                    {
-                       $message = 'Veuillez selectionner le chapitre à modifier avant de valider.';
+                       $errorMessage = 'Veuillez selectionner le chapitre à modifier avant de valider.';
                    }
                } else if (isset($_POST['delete']))
                {
@@ -43,7 +43,7 @@
                         $chapterId = (int)$_POST['id'];
                         $chapterToDel = $this->_manager->getPost($chapterId);
                         $this->_manager->delete($chapterToDel);
-                        $message = 'Vous avez bien supprimé le chapitre ayant pour Id : '. $chapterId;
+                        $errorMessage = 'Vous avez bien supprimé le chapitre ayant pour Id : '. $chapterId;
                     }
                }
             } else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-change']) && isset($_POST['newTitle']))
@@ -59,10 +59,10 @@
                     $chapterToChange->setContent($newContent);
                     $chapterToChange->setModifiedDate($now);
                     $this->_manager->update($chapterToChange);
-                    $message = 'Vos modifications ont bien été enregistrées.';
+                    $errorMessage = 'Vos modifications ont bien été enregistrées.';
                 } else
                 {
-                    $message = 'Le contenu ne peut pas être vide.';
+                    $errorMessage = 'Le contenu ne peut pas être vide.';
                 }
             }
             $chapters = $this->_manager->getList();
@@ -95,21 +95,21 @@
 
                 if ($this->_manager->exists($_POST['title']))
                 {
-                    //modif de $message
-                    $message = 'Ce titre est déjà pris';
+                    //modif de $errorMessage
+                    $errorMessage = 'Ce titre est déjà pris';
                     unset($chapter);
                 }
                 else
                 {
                     $this->_manager->add($chapter);
-                    //modif de $message
-                    $message = 'Votre chapitre a bien été enregistré';
+                    //modif de $errorMessage
+                    $errorMessage = 'Votre chapitre a bien été enregistré';
                 }
             }
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-chapter']) && isset($_POST['content']) && $_POST['content']=='')
             {
                 unset($chapter);
-                $message = 'Vous devez remplir le contenu du chapitre avant de l\'enregistrer.';
+                $errorMessage = 'Vous devez remplir le contenu du chapitre avant de l\'enregistrer.';
             }
 
             ob_start();
@@ -137,11 +137,11 @@
                         $commentAuthor = $commentToChange->author();
                         $commentContent = $commentToChange->content();
                         $commentId = $commentToChange->id();
-                        $message = 'Vous pouvez modifier le commentaire ayant l\'Id : '. $selectedCommentId;
+                        $errorMessage = 'Vous pouvez modifier le commentaire ayant l\'Id : '. $selectedCommentId;
 
                    } else
                    {
-                       $message = 'Veuillez selectionner le commentaire à modifier avant de valider.';
+                       $errorMessage = 'Veuillez selectionner le commentaire à modifier avant de valider.';
                    }
                } else if (isset($_POST['delete']))
                {
@@ -150,7 +150,7 @@
                         $commentId = (int)$_POST['id'];
                         $commentToDel = $this->_commentDb->getComment($commentId);
                         $this->_commentDb->delete($commentToDel);
-                        $message = 'Vous avez bien supprimé le commentaire ayant pour Id : '. $commentId;
+                        $errorMessage = 'Vous avez bien supprimé le commentaire ayant pour Id : '. $commentId;
                     }
                }
             } else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save-change']))
@@ -165,10 +165,10 @@
                     $commentToChange->setContent($newContent);
                     $commentToChange->setIsModerated(true);
                     $this->_commentDb->update($commentToChange);
-                    $message = 'Vos modifications ont bien été enregistrées.';
+                    $errorMessage = 'Vos modifications ont bien été enregistrées.';
                 } else
                 {
-                    $message = 'Le contenu ne peut pas être vide.';
+                    $errorMessage = 'Le contenu ne peut pas être vide.';
                 }  
             }
 

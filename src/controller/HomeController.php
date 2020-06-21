@@ -125,21 +125,21 @@ class HomeController
                         'isReported' => 0]);    
           
                     $this->_commentDb->add($comment);
-                    $message = 'Votre commentaire a été ajouté avec succès !';
+                    $errorMessage = 'Votre commentaire a été ajouté avec succès !';
                  } else 
                 {
-                    $message = 'Un problème est survenu. Veuillez recommencer.';
+                    $errorMessage = 'Un problème est survenu. Veuillez recommencer.';
                 }
                     
             } else
             {
-                $message = 'Veuillez entrer votre pseudo.';
+                $errorMessage = 'Veuillez entrer votre pseudo.';
             }
         }
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['post-comment']) && isset($_POST['content']) && $_POST['content']=='')
         {
             unset($comment);
-            $message = 'Vous ne pouvez pas poster un commentaire vide';
+            $errorMessage = 'Vous ne pouvez pas poster un commentaire vide';
         }
       
     }
@@ -153,7 +153,7 @@ class HomeController
                 $commentId = (int)$_POST['commentId'];
                 $commentToReport = $this->_commentDb->getComment($commentId);
                 $this->_commentDb->report($commentToReport);
-                $message = 'Vous avez bien signalé le commentaire ayant pour Id : '. $commentId;
+                $errorMessage = 'Vous avez bien signalé le commentaire ayant pour Id : '. $commentId;
             }
         }
     }
@@ -175,13 +175,13 @@ class HomeController
                     {
                         $_SESSION['user'] = $pseudo;
                         $_SESSION['privilege'] = $connectingUser->privilege();
-                        $message = 'Connexion réussie ! Bienvenue '.$pseudo.' !';
+                        $errorMessage = 'Connexion réussie ! Bienvenue '.$pseudo.' !';
                         $this->displayHomePage();
                     }
                     else
                     {
                         //Seul le "echo" est récupéré pour l'instant
-                        $message =  'Identifiant ou mot de passe incorrect';
+                        $errorMessage =  'Identifiant ou mot de passe incorrect';
                         echo 'Identifiant ou mot de passe incorrect';
                         ob_start();
                             $bigTitle = 'Connexion';
@@ -227,24 +227,24 @@ class HomeController
 
                     if ($this->_userDb->exists($_POST['pseudo']))
                     {
-                        //modif de $message
-                        $message = 'Ce pseudo est déjà pris';
+                        //modif de $errorMessage
+                        $errorMessage = 'Ce pseudo est déjà pris';
                         unset($newUser);
                     }
                     else
                     {
                         $this->_userDb->add($newUser);
-                        //modif de $message
-                        $message = 'Votre inscription a bien été enregistrée';
+                        //modif de $errorMessage
+                        $errorMessage = 'Votre inscription a bien été enregistrée';
                     }
                 } else
                 {
-                    $message = 'Les mots de passe ne correspondent pas';
+                    $errorMessage = 'Les mots de passe ne correspondent pas';
                 }
 
             } else
             {
-                $message = 'Votre adresse mail n\'est pas valide.';
+                $errorMessage = 'Votre adresse mail n\'est pas valide.';
             }
 
         }
@@ -258,5 +258,52 @@ class HomeController
         $pageContent = ob_get_clean();
         require 'src/view/layout.php';
     }
+
+    public function displayLegalPage()
+    {
+
+        ob_start();
+            require 'src/view/headerTemplate.php';
+            require 'src/view/legalNoticeView.php';
+        $pageContent = ob_get_clean();
+        require 'src/view/layout.php';
+
+    }
+
+    public function displayContactPage()
+    {
+
+        if(isset($_POST['contact']) && isset($_POST['message']))
+        {
+
+            $header="MIME-Version: 1.0\r\n";
+            $header.='From:"Cmpx.com"<contact@cmpx.com>'."\n";
+            $header.='Content-Type:text/html; charset="uft-8"'."\n";
+            $header.='Content-Transfer-Encoding: 8bit';
+
+            $message = '<html>
+            <body>
+                <div align="center">
+                    <p>'.$_POST['name'].' vous a envoyé un message. <br/>
+                    Son email est '.$_POST['email'].'.<br/>
+                    Son message dit : <br/>'
+                    .$_POST['message'].'
+                </div>
+            </body>';
+
+
+            mail("celine.maupoux@gmail.com", "Message du blog Billet pour l'Alaska", $message, $header);
+            mail($_POST['email'], "Accusé de réception", "<html><body><p>Nous avons bien reçu votre message. <br/>Nous vous recontacterons prochainement à ce sujet. <br/> Merci de votre collaboration.</p></body></html>", $header );
+        }
+
+        $bigTitle = 'Contact';
+        ob_start();
+            require 'src/view/headerTemplate.php';
+            require 'src/view/contactView.php';
+        $pageContent = ob_get_clean();
+        require 'src/view/layout.php';
+
+    }
+
 
 }

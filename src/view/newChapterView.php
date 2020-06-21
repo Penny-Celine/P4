@@ -4,9 +4,9 @@
         <form action="" method="post">
             <h3 class='offset-3 col-6'>Nouveau chapitre</h3><br/>
             <?php
-              if (isset($message))
+              if (isset($errorMessage))
               {
-                  echo '<p> Message :' . $message . '</p>';
+                  echo '<p> Message :' . $errorMessage . '</p>';
               }
             ?>
             <p class="row">
