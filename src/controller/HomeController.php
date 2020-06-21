@@ -72,10 +72,10 @@ class HomeController
         {
             $this->_chapterDb = new \App\Model\PostManager();
             $this->_commentDb = new \App\Model\CommentManager();
-            $this->comment();
-            $this->reportComment();
-            
+                        
             ob_start();
+            $this->reportComment();
+            $this->comment();
             $chapterId = (int)$_GET['id'];
             $orderedComments = $this->_commentDb->getCommentsOrdered($chapterId);
             $chapter = $this->_chapterDb->getPost($chapterId);
@@ -175,15 +175,12 @@ class HomeController
                     {
                         $_SESSION['user'] = $pseudo;
                         $_SESSION['privilege'] = $connectingUser->privilege();
-                        $errorMessage = 'Connexion réussie ! Bienvenue '.$pseudo.' !';
                         $this->displayHomePage();
                     }
                     else
                     {
-                        //Seul le "echo" est récupéré pour l'instant
-                        $errorMessage =  'Identifiant ou mot de passe incorrect';
-                        echo 'Identifiant ou mot de passe incorrect';
                         ob_start();
+                            $errorMessage = 'Identifiant ou mot de passe incorrect';
                             $bigTitle = 'Connexion';
                             require 'src/view/headerTemplate.php';
                             require 'src/view/loginView.php';
@@ -294,6 +291,7 @@ class HomeController
 
             mail("celine.maupoux@gmail.com", "Message du blog Billet pour l'Alaska", $message, $header);
             mail($_POST['email'], "Accusé de réception", "<html><body><p>Nous avons bien reçu votre message. <br/>Nous vous recontacterons prochainement à ce sujet. <br/> Merci de votre collaboration.</p></body></html>", $header );
+            $errorMessage = 'Votre message a bien été envoyé.';
         }
 
         $bigTitle = 'Contact';
