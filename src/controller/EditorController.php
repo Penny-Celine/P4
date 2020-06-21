@@ -161,7 +161,7 @@
 
                     $newContent = $_POST['newContent'];
                     $commentToChangeId = (int)$_POST['commentId'];
-                    $commentToChange = $this->_comment->getComment($commentToChangeId);
+                    $commentToChange = $this->_commentDb->getComment($commentToChangeId);
                     $commentToChange->setContent($newContent);
                     $commentToChange->setIsModerated(true);
                     $this->_commentDb->update($commentToChange);

@@ -19,15 +19,13 @@
             <?php
                 for ($i=0; isset($orderedComments[$i]); $i ++)
                 {
-                echo '<form action="" method="post">';
-                echo '<div class="container comment">Id :' .$orderedComments[$i]->id(). ' ';
-                echo 'Auteur :' .$orderedComments[$i]->author(). '<br/> ';
-                echo 'Commentaire :' .$orderedComments[$i]->content(). '<br/> ';
-                echo 'Ecrit le :' .$orderedComments[$i]->creationDate(). ' </div>';
-                //echo 'Déjà modéré ?' .$orderedComments[$i]->isModified(). ' ';
-                //echo 'Reporté ?' .$orderedComments[$i]->isReported(). ' ';
-                echo '<input type="hidden" name="commentId" value="'.$orderedComments[$i]->id().'"/>';
-                echo '<input type="submit" name="report" value="Signaler"/></form>';
+                    echo '<form action="" method="post">';
+                    echo '<div class="container comment">';
+                    echo '<p class="row">Auteur :' .$orderedComments[$i]->author(). '</p><br/> ';
+                    echo '<p class="row">Commentaire :' .$orderedComments[$i]->content(). '</p><br/> ';
+                    echo '<p class="row">Ecrit le :' .$orderedComments[$i]->creationDate(). '</p></div>';
+                    echo '<input type="hidden" name="commentId" value="'.$orderedComments[$i]->id().'"/>';
+                    echo '<input class="button" type="submit" name="report" value="Signaler"/></form>';
                 }
             ?>
             </p>
@@ -52,3 +50,5 @@
             </div>
         </div>
     </section>
+
+    

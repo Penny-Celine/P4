@@ -9,10 +9,14 @@
                   echo '<p> Message :' . $message . '</p>';
               }
             ?>
-            <p class="col-12 col-lg-12">
-              <label for="title">Titre du Chapitre : </label><input type="text" name="title" maxlength="255" required/><br/>
-              <label for="content">Contenu : </label><textarea name="content"></textarea><br/>
-              <input type="submit" value="Enregistrer ce chapitre" name="save-chapter" />
+            <p class="row">
+              <label for="title" class="col-4 col-lg-4">Titre du Chapitre : </label><input class="col-6 col-lg-6" type="text" name="title" maxlength="255" required/><br/>
+            </p>
+            <p class="row">
+              <label for="content" class="col-4 col-lg-4">Contenu : </label><br/><textarea class="col-12 col-lg-12 new-chapter" name="content"></textarea><br/>
+            </p>
+            <p class="row">  
+              <input class="button" type="submit" value="Enregistrer ce chapitre" name="save-chapter" />
             </p>
         </form>
       </div>

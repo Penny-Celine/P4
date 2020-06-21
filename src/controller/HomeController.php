@@ -194,6 +194,14 @@ class HomeController
                     }
                 }
             }
+        } else
+        {
+            ob_start();
+                $bigTitle = 'Connexion';
+                require 'src/view/headerTemplate.php';
+                require 'src/view/loginView.php';
+            $pageContent = ob_get_clean();
+            require 'src/view/layout.php';
         }
     }
     public function displaySubscribePage()

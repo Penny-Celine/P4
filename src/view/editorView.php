@@ -26,6 +26,7 @@
     <div class="row">
       <form method='post'>
         <section class="container">
+        <input type="submit" value="Modifier" name="update" /> <input type="submit" value="Supprimer" name="delete"/><br/>
           <table class="table-sm table-dark table-bordered table-striped">
             <caption class="top-caption">
               <h4>Liste des Chapitres</h4>
@@ -71,7 +72,7 @@
               ?>
             </tbody>
           </table>
-          <input type="submit" value="Modifier" name="update" /> <input type="submit" value="Supprimer" name="delete"/><br/>
+          
         </section>
       </form>
     </div>

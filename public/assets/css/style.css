@@ -47,6 +47,10 @@ blockquote {
     border: 2px groove lightslategray;
 }
 
+.last-chapter-container p {
+    word-break: break-all;
+}
+
 .top-caption {
     caption-side: top;
 }
@@ -64,6 +68,24 @@ table td {
 
 .table-danger {
     color: black;
+}
+
+.new-chapter {
+    height: 20em;
+}
+
+.comment {
+
+    min-width: 22em;
+    border: 2px groove lightslategray;
+}
+
+.subscribe p {
+    text-align: center;
+}
+
+.subscribe label {
+    text-align: right;
 }
 
 

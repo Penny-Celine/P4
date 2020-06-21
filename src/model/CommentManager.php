@@ -126,7 +126,7 @@ class CommentManager extends Manager
     public function update(Comment $comment)
     {
         $request = $this->_dataBase->prepare('UPDATE comment SET content = :content, 
-                                            isModified = true, isReported = false WHERE id = :id');
+                                            isModerated = true, isReported = false WHERE id = :id');
         
         $request->bindValue(':content', $comment->content());
         $request->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
