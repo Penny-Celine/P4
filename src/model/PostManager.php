@@ -107,7 +107,7 @@ class PostManager extends Manager
     
     public function update(Post $chapter)
     {
-      $request = $this->_dataBase->prepare('UPDATE chapter SET title = :title, content = :content, modifiedDate = :modifiedDate WHERE id = :id');
+      $request = $this->_dataBase->prepare('UPDATE chapter SET title = :title, content = :content, modifiedDate = :modifiedDate, isDeleted = "Non" WHERE id = :id');
       
       $request->bindValue(':title', $chapter->title());
       $request->bindValue(':content', $chapter->content());
