@@ -32,7 +32,6 @@ if (isset($_GET['page'])) {
             break;
         case 'deconnexion' :
             session_destroy();
-            $_GET['page']='accueil';
             $page->displayHomePage();
             break;
         default:
