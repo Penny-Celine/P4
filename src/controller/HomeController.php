@@ -23,16 +23,14 @@ class HomeController
         $orderedComments = $this->_commentDb->getCommentsOrdered($lastChapterId);
 
         ob_start();
-        require 'src/view/headerTemplate.php';
-        $lastChapterTitle = $this->_lastChapter->title();
-        $lastChapterCreationDate = $this->_lastChapter->creationDate();
-        $lastChapterContent = $this->_lastChapter->content();
-        $chapterId = $this->_lastChapter->id();
-
-        require 'src/view/homeView.php';
-
+            require 'src/view/headerTemplate.php';
+            $lastChapterTitle = $this->_lastChapter->title();
+            $lastChapterCreationDate = $this->_lastChapter->creationDate();
+            $lastChapterContent = $this->_lastChapter->content();
+            $chapterId = $this->_lastChapter->id();
+            require 'src/view/homeView.php';
         $pageContent = ob_get_clean();
-        include 'src/view/layout.php';
+        require 'src/view/layout.php';
 
     }
 
@@ -194,7 +192,10 @@ class HomeController
                     }
                 }
             }
-        } else
+        } else if (isset($_SESSION['user']) && isset($_SESSION['privilege']))
+        {
+            $this->displayHomePage();
+        } else        
         {
             ob_start();
                 $bigTitle = 'Connexion';
@@ -257,18 +258,5 @@ class HomeController
         $pageContent = ob_get_clean();
         require 'src/view/layout.php';
     }
-
-    public function createChapter() {
-            
-        
-        ob_start();
-        $bigTitle = 'Nouveau Chapitre';
-        require 'src/view/headerTemplate.php';
-        require 'src/view/newChapterView.php';
-        $pageContent = ob_get_clean();
-        include 'src/view/layout.php';
-
-    }
-
 
 }

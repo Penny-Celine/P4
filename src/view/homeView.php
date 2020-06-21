@@ -55,7 +55,7 @@
     <div class='row'>
         <div class="container">    
                 <form action="" method="post">
-                    <h3 class='offset-3 col-6'>Commenter :</h3><br/>
+                    <h4 class='offset-1 col-8'>Commenter :</h4><br/>
                     <?php
                       if (isset($message))
                       {

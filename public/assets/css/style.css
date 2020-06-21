@@ -109,6 +109,13 @@ footer {
         max-width: 140px;
     }
 
+    
+    table {
+        font-size: 0.6em;
+        line-height: 0.9em;
+        word-wrap: break-word;
+    }
+
 
 }
 
@@ -136,4 +143,11 @@ footer {
     h1 {
         font-size: 3em;
     }
+
+    table {
+        font-size: 0.4em;
+        line-height: 0.8em;
+        word-wrap: break-word;
+    }
+
 }

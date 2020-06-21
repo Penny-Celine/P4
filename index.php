@@ -11,7 +11,7 @@ $page = new HomeController();
 
 if (isset($_GET['page'])) {
     switch ($_GET['page']) {
-    
+
         case 'connexion' :
             $page->displayLoginPage();
             break;
@@ -32,6 +32,7 @@ if (isset($_GET['page'])) {
             break;
         case 'deconnexion' :
             session_destroy();
+            $_GET['page']='accueil';
             $page->displayHomePage();
             break;
         default:
