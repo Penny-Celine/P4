@@ -76,7 +76,7 @@ table td {
 
 .comment {
 
-    min-width: 22em;
+    min-width: 18em;
     border: 2px groove lightslategray;
 }
 
@@ -115,6 +115,11 @@ footer {
         word-wrap: break-word;
     }
 
+    .comment {
+
+        min-width: 17em;
+    }
+
 
 }
 
@@ -147,6 +152,12 @@ footer {
         font-size: 0.4em;
         line-height: 0.8em;
         word-wrap: break-word;
+    }
+
+    .comment {
+
+        min-width: 0;
+        max-width: 15em;
     }
 
 }
