@@ -157,7 +157,7 @@ class HomeController
                     {
                         $_SESSION['user'] = $pseudo;
                         $_SESSION['privilege'] = $connectingUser->privilege();
-                        header('Location: http://localhost/P4_Maupoux_Celine_01_Code_Source/');
+                        header('Location: http://localhost/P4_Maupoux_Celine/');
                         exit();
                     }
                     else
@@ -174,7 +174,7 @@ class HomeController
             }
         } else if (isset($_SESSION['user']) && isset($_SESSION['privilege']))
         {
-            header('Location: http://localhost/P4_Maupoux_Celine_01_Code_Source/');
+            header('Location: http://localhost/P4_Maupoux_Celine/');
             exit();
         } else        
         {

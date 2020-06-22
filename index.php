@@ -26,7 +26,7 @@ if (isset($_GET['page'])) {
                 $editorPage->createChapter();
             } else 
             {
-                header('Location : http://localhost/P4_Maupoux_Celine_01_Code_Source/index.php');
+                header('Location : http://localhost/P4_Maupoux_Celine/index.php');
                 exit();
                 //$page->displayHomePage();
             }
@@ -40,7 +40,7 @@ if (isset($_GET['page'])) {
                 $editorPage->moderate();
             } else
             {
-                header('Location: http://localhost/P4_Maupoux_Celine_01_Code_Source/');
+                header('Location: http://localhost/P4_Maupoux_Celine/');
                 exit();
                 //$page->displayHomePage();
             }
@@ -48,7 +48,7 @@ if (isset($_GET['page'])) {
             break;
         case 'deconnexion' :
             session_destroy();
-            header('Location: http://localhost/P4_Maupoux_Celine_01_Code_Source/');
+            header('Location: http://localhost/P4_Maupoux_Celine/');
             exit();
             //$page->displayHomePage();
             break;
