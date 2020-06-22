@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang='fr'>
     <head>
-        <title><?= $pageTitle ?? 'Billet pour l\'Alaska'?></title>
-        <meta name= 'description' content= '<?= $pageDescription ?? 'Blog de l\'écrivain fictif Jean Forteroche appelé Billet pour l\'Alaska réalisé pour un projet OpenClassrooms sur le langage PHP' ?>' />
+        <title><?= $pageTitle ?? 'Billet simple pour l\'Alaska'?></title>
+        <meta name= 'description' content= "<?= $pageDescription ?? 'Blog de l ecrivain fictif Jean Forteroche appelé Billet pour l Alaska réalisé pour un projet OpenClassrooms sur le langage PHP ' ?>" />
         <meta charset='utf-8'/>
         <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'/>
         <meta name='author' content='Céline Maupoux' />

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Manager;
 
 class CommentManager extends Manager
 {
@@ -16,7 +16,7 @@ class CommentManager extends Manager
         $this->_dataBase = $dataBase;
     }
 
-    public function add(Comment $comment){
+    public function add(\App\Model\Comment $comment){
 
         $request = $this->_dataBase->prepare('INSERT INTO comment 
             (`userId`, `author`, `chapterId`, `creationDate`, `content`, `isModerated`, `isReported`) 
@@ -52,7 +52,7 @@ class CommentManager extends Manager
         return $this->_dataBase->query('SELECT COUNT(*) FROM comment')->fetchColumn();
     }
 
-    public function delete(Comment $comment)
+    public function delete(\App\Model\Comment $comment)
     {
         $request = $this->_dataBase->prepare('DELETE FROM comment WHERE id = :id');
         $request->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
@@ -66,7 +66,7 @@ class CommentManager extends Manager
             $request = $this->_dataBase->query('SELECT * FROM comment WHERE id = '.$info );
             $data = $request->fetch(\PDO::FETCH_ASSOC);
             
-            return new Comment($data);
+            return new \App\Model\Comment($data);
         }
     }
 
@@ -77,7 +77,7 @@ class CommentManager extends Manager
         $request->execute();
         while ($data = $request->fetch(\PDO::FETCH_ASSOC))
         {
-            $orderedComments[] = new Comment($data);
+            $orderedComments[] = new \App\Model\Comment($data);
         }
         
         return $orderedComments;
@@ -93,13 +93,13 @@ class CommentManager extends Manager
         
         while ($data = $request->fetch(\PDO::FETCH_ASSOC))
         {
-            $comments[] = new Comment($data);
+            $comments[] = new \App\Model\Comment($data);
         }
         
         return $comments;
     }
 
-    public function report(Comment $comment)
+    public function report(\App\Model\Comment $comment)
     {
         $request = $this->_dataBase->prepare('UPDATE comment SET isReported = true WHERE id = :id');
         $request->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
@@ -117,13 +117,13 @@ class CommentManager extends Manager
         
         while ($data = $request->fetch(\PDO::FETCH_ASSOC))
         {
-            $comments[] = new Comment($data);
+            $comments[] = new \App\Model\Comment($data);
         }
         
         return $comments;
     }
     
-    public function update(Comment $comment)
+    public function update(\App\Model\Comment $comment)
     {
         $request = $this->_dataBase->prepare('UPDATE comment SET content = :content, 
                                             isModerated = true, isReported = false WHERE id = :id');

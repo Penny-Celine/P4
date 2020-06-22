@@ -10,7 +10,7 @@
         //private $_viewRenderer;
 
         public function __construct() {
-            $this->_manager = new \App\Model\PostManager();
+            $this->_manager = new \App\Manager\PostManager();
             //$this->_viewRenderer = new \App\Services\ViewRenderer();
 
             $pageTitle = 'Edition de Chapitres';
@@ -70,11 +70,11 @@
             ob_start();
             $bigTitle = 'Edition de Chapitres';
             
-            require 'src/view/headerTemplate.php';
-            require 'src/view/editorView.php';
+            require 'src/view/templates/headerTemplate.php';
+            require 'src/view/editorViews/editorView.php';
             //$this->_viewRenderer->render('editorView.php', $chapters);
             $pageContent = ob_get_clean();
-            require 'src/view/layout.php';
+            require 'src/view/templates/layout.php';
         }
 
 
@@ -114,16 +114,16 @@
 
             ob_start();
             $bigTitle = 'Nouveau Chapitre';
-            require 'src/view/headerTemplate.php';
-            require 'src/view/newChapterView.php';
+            require 'src/view/templates/headerTemplate.php';
+            require 'src/view/editorViews/newChapterView.php';
             $pageContent = ob_get_clean();
-            include 'src/view/layout.php';
+            include 'src/view/templates/layout.php';
 
         }
 
         public function moderate() {
 
-            $this->_commentDb = new \App\Model\CommentManager();
+            $this->_commentDb = new \App\Manager\CommentManager();
 
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update']) || $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete']))
@@ -176,9 +176,9 @@
 
             ob_start();
 
-            require 'src/view/headerTemplate.php';
-            require 'src/view/moderationView.php';
+            require 'src/view/templates/headerTemplate.php';
+            require 'src/view/editorViews/moderationView.php';
             $pageContent = ob_get_clean();
-            include 'src/view/layout.php';          
+            include 'src/view/templates/layout.php';          
         }
     }

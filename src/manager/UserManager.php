@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Manager;
 
 class UserManager extends Manager
 {
@@ -16,7 +16,7 @@ class UserManager extends Manager
       $this->_dataBase = $dataBase;
     }
 
-    public function add(User $user){
+    public function add(\App\Model\User $user){
 
         $request = $this->_dataBase->prepare('INSERT INTO `user`(`name`, `pseudo`, `password`, `email`, `privilege`, `subscribeDate`, `isDeleted`)
             VALUES (:name, :pseudo, :password, :email, :privilege, :subscribeDate, 0)');
@@ -49,7 +49,7 @@ class UserManager extends Manager
       return $this->_dataBase->query('SELECT COUNT(*) FROM user')->fetchColumn();
     }
 
-    public function delete(User $user)
+    public function delete(\App\Model\User $user)
     {
       if ($user->isDeleted()!=null && $user->isDeleted()===0)
       {
@@ -62,7 +62,7 @@ class UserManager extends Manager
       }
     }
 
-    public function definitiveDelete(User $user)
+    public function definitiveDelete(\App\Model\User $user)
     {
       $request = $this->_dataBase->prepare('DELETE FROM user WHERE id = :id');
       $request->bindValue(':id', $user->id(), \PDO::PARAM_INT);
@@ -78,7 +78,7 @@ class UserManager extends Manager
         $request->execute();
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         
-        return new User($data);
+        return new \App\Model\User($data);
       }
     }
 
@@ -97,12 +97,12 @@ class UserManager extends Manager
       
       while ($data = $request->fetch(\PDO::FETCH_ASSOC))
       {
-        $users[] = new User($data);
+        $users[] = new \App\Model\User($data);
       }
       return $users;
     }
     
-    public function update(User $user)
+    public function update(\App\Model\User $user)
     {
       $request = $this->_dataBase->prepare('UPDATE user SET `name`= :userName `pseudo` = :pseudo,  `password` = :userPassword,  WHERE `id` = :id');
       

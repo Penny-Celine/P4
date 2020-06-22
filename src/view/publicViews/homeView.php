@@ -34,7 +34,7 @@
         <h3 class="col-12 col-lg-12">Commentaires</h3><br/>
       </div>
       <div class="row">
-        <p col-12 col-lg-12>
+        <p class="col-12 col-lg-12">
             <?php
                 for ($i=0; isset($orderedComments[$i]); $i ++)
                 {
@@ -63,8 +63,8 @@
                       }
                     ?>
                     <p class="col-12 col-lg-12">
-                        <label for="author">Votre pseudo : </label><input type="text" name="author" value="<?=$_SESSION['user'] ?? ''?>" maxlength="255" required/><br/>
-                        <label for="content">Message : </label><textarea name="content"></textarea><br/>
+                        <label for="author">Votre pseudo : </label><input type="text" id="author" name="author" value="<?=$_SESSION['user'] ?? ''?>" maxlength="255" required/><br/>
+                        <label for="content">Message : </label><textarea id="content" name="content"></textarea><br/>
                         <input type="hidden" name="chapterId" value="<?= $chapterId ?? ''?>"/>
                         <input type="submit" value="Enregistrer" name="post-comment" />
                     </p>

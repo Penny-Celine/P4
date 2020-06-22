@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Manager;
 
 class PostManager extends Manager
 {
@@ -16,7 +16,7 @@ class PostManager extends Manager
       $this->_dataBase = $dataBase;
     }
 
-    public function add(Post $chapter){
+    public function add(\App\Model\Post $chapter){
 
         $request = $this->_dataBase->prepare('INSERT INTO chapter 
             (`userId`, `title`, `content`, `creationDate`, `modifiedDate`, `enableComments`, `isDeleted`) 
@@ -51,7 +51,7 @@ class PostManager extends Manager
       return $this->_dataBase->query('SELECT COUNT(*) FROM chapter')->fetchColumn();
     }
 
-    public function delete(Post $chapter)
+    public function delete(\App\Model\Post $chapter)
     {
       if ($chapter->isDeleted()!=null && $chapter->isDeleted()==="Non")
       {
@@ -64,7 +64,7 @@ class PostManager extends Manager
       }
     }
 
-    public function definitiveDelete(Post $chapter)
+    public function definitiveDelete(\App\Model\Post $chapter)
     {
       $request = $this->_dataBase->prepare('DELETE FROM chapter WHERE id = :id');
       $request->bindValue(':id', $chapter->id(), \PDO::PARAM_INT);
@@ -78,7 +78,7 @@ class PostManager extends Manager
         $request = $this->_dataBase->query('SELECT * FROM chapter WHERE id = '.$info );
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         
-        return new Post($data);
+        return new \App\Model\Post($data);
       }
     }
 
@@ -87,7 +87,7 @@ class PostManager extends Manager
         $request = $this->_dataBase->query('SELECT * FROM chapter WHERE isDeleted = "Non" ORDER BY creationDate DESC LIMIT 1');
         $data = $request->fetch(\PDO::FETCH_ASSOC);
         
-        return new Post($data);
+        return new \App\Model\Post($data);
     }
     
     
@@ -100,12 +100,12 @@ class PostManager extends Manager
       
       while ($data = $request->fetch(\PDO::FETCH_ASSOC))
       {
-        $chapters[] = new Post($data);
+        $chapters[] = new \App\Model\Post($data);
       }
       return $chapters;
     }
     
-    public function update(Post $chapter)
+    public function update(\App\Model\Post $chapter)
     {
       $request = $this->_dataBase->prepare('UPDATE chapter SET title = :title, content = :content, modifiedDate = :modifiedDate, isDeleted = "Non" WHERE id = :id');
       

@@ -2,7 +2,7 @@
 
   <div class = "row">
     <img src="public/images/logo-header.png" alt="" class = "header-logo offset-2 col-2 col-lg-2 justify-content-end"/>
-    <h1 class = "col-8 col-lg-8"><?= $bigTitle ?? 'Billet pour l\'Alaska'?></h1>
+    <h1 class = "col-8 col-lg-8"><?= $bigTitle ?? 'Billet simple pour l\'Alaska'?></h1>
   </div>
 
   <nav class ="row navbar">

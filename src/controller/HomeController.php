@@ -13,9 +13,9 @@ class HomeController
 
     public function displayHomePage()
     {
-        $this->_chapterDb = new \App\Model\PostManager();
-        $this->_commentDb = new \App\Model\CommentManager();
-        $this->_userDb = new \App\Model\UserManager();
+        $this->_chapterDb = new \App\Manager\PostManager();
+        $this->_commentDb = new \App\Manager\CommentManager();
+        $this->_userDb = new \App\Manager\UserManager();
         $this->_lastChapter = $this->_chapterDb->getLastPost();
         $this->comment();
         $this->reportComment();
@@ -23,14 +23,14 @@ class HomeController
         $orderedComments = $this->_commentDb->getCommentsOrdered($lastChapterId);
 
         ob_start();
-            require 'src/view/headerTemplate.php';
+            require 'src/view/templates/headerTemplate.php';
             $lastChapterTitle = $this->_lastChapter->title();
             $lastChapterCreationDate = $this->_lastChapter->creationDate();
             $lastChapterContent = $this->_lastChapter->content();
             $chapterId = $this->_lastChapter->id();
-            require 'src/view/homeView.php';
+            require 'src/view/publicViews/homeView.php';
         $pageContent = ob_get_clean();
-        require 'src/view/layout.php';
+        require 'src/view/templates/layout.php';
 
     }
 
@@ -42,13 +42,13 @@ class HomeController
             $editorPage->display();
         } else
         {
-            $this->_chapterDb = new \App\Model\PostManager();
+            $this->_chapterDb = new \App\Manager\PostManager();
             ob_start();
                 $chapters = $this->_chapterDb->getList();
-                require 'src/view/headerTemplate.php';
-                require 'src/view/publicListView.php';
+                require 'src/view/templates/headerTemplate.php';
+                require 'src/view/publicViews/publicListView.php';
             $pageContent = ob_get_clean();
-            require 'src/view/layout.php';
+            require 'src/view/templates/layout.php';
         }
 
     }
@@ -70,8 +70,8 @@ class HomeController
     {
         if (isset($_GET['id']))
         {
-            $this->_chapterDb = new \App\Model\PostManager();
-            $this->_commentDb = new \App\Model\CommentManager();
+            $this->_chapterDb = new \App\Manager\PostManager();
+            $this->_commentDb = new \App\Manager\CommentManager();
                         
             ob_start();
             $this->reportComment();
@@ -83,10 +83,10 @@ class HomeController
             $creationDate = $chapter->creationDate();
             $modifiedDate = $chapter->modifiedDate();
             $content = $chapter->content();
-            require 'src/view/headerTemplate.php';           
-            require 'src/view/chapterView.php';
+            require 'src/view/templates/headerTemplate.php';           
+            require 'src/view/publicViews/chapterView.php';
             $pageContent = ob_get_clean();
-            require 'src/view/layout.php';
+            require 'src/view/templates/layout.php';
         }
     }
 
@@ -98,12 +98,12 @@ class HomeController
 
     public function comment()
     {
-        $this->_commentDb = new \App\Model\CommentManager();
+        $this->_commentDb = new \App\Manager\CommentManager();
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['post-comment']) && isset($_POST['content']) && $_POST['content']!='')
         {
             if (isset($_POST['author']) && $_POST['author']!='')
             {
-                $this->_userDb = new \App\Model\UserManager();
+                $this->_userDb = new \App\Manager\UserManager();
                 if (isset($_SESSION['user']) && $_SESSION['user'] === $_POST['author'] && $this->_userDb->exists($_POST['author']))
                 {
                     $author = $this->_userDb->getUser($_POST['author']);
@@ -166,7 +166,7 @@ class HomeController
             {
                 $pseudo = htmlSpecialChars($_POST['pseudo']);
                 $passwordToTest = $_POST['password'];
-                $this->_userDb = new \App\Model\UserManager();
+                $this->_userDb = new \App\Manager\UserManager();
                 if ($this->_userDb->exists($pseudo))
                 {
                     $connectingUser = $this->_userDb->getUser($pseudo);
@@ -182,10 +182,10 @@ class HomeController
                         ob_start();
                             $errorMessage = 'Identifiant ou mot de passe incorrect';
                             $bigTitle = 'Connexion';
-                            require 'src/view/headerTemplate.php';
-                            require 'src/view/loginView.php';
+                            require 'src/view/templates/headerTemplate.php';
+                            require 'src/view/formViews/loginView.php';
                         $pageContent = ob_get_clean();
-                        require 'src/view/layout.php';
+                        require 'src/view/templates/layout.php';
                     }
                 }
             }
@@ -196,15 +196,15 @@ class HomeController
         {
             ob_start();
                 $bigTitle = 'Connexion';
-                require 'src/view/headerTemplate.php';
-                require 'src/view/loginView.php';
+                require 'src/view/templates/headerTemplate.php';
+                require 'src/view/formViews/loginView.php';
             $pageContent = ob_get_clean();
-            require 'src/view/layout.php';
+            require 'src/view/templates/layout.php';
         }
     }
     public function displaySubscribePage()
     {
-        $this->_userDb = new \App\Model\UserManager();
+        $this->_userDb = new \App\Manager\UserManager();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['subscribe']))
         {
@@ -250,20 +250,20 @@ class HomeController
         ob_start();
                    
             $bigTitle = 'Inscription';
-            require 'src/view/headerTemplate.php';
-            require 'src/view/subscribeView.php';
+            require 'src/view/templates/headerTemplate.php';
+            require 'src/view/formViews/subscribeView.php';
         $pageContent = ob_get_clean();
-        require 'src/view/layout.php';
+        require 'src/view/templates/layout.php';
     }
 
     public function displayLegalPage()
     {
 
         ob_start();
-            require 'src/view/headerTemplate.php';
-            require 'src/view/legalNoticeView.php';
+            require 'src/view/templates/headerTemplate.php';
+            require 'src/view/publicViews/legalNoticeView.php';
         $pageContent = ob_get_clean();
-        require 'src/view/layout.php';
+        require 'src/view/templates/layout.php';
 
     }
 
@@ -296,10 +296,10 @@ class HomeController
 
         $bigTitle = 'Contact';
         ob_start();
-            require 'src/view/headerTemplate.php';
-            require 'src/view/contactView.php';
+            require 'src/view/templates/headerTemplate.php';
+            require 'src/view/formViews/contactView.php';
         $pageContent = ob_get_clean();
-        require 'src/view/layout.php';
+        require 'src/view/templates/layout.php';
 
     }
 

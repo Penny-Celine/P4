@@ -31,18 +31,13 @@
             </p>
         </div>
         <div class='row'>
-            <div class="container">    
+            <div class="container">
+                <p><?=$errorMessage ?? ''?></p>  
                 <form action="" method="post">
                     <h4 class='offset-1 col-8'>Commenter :</h4><br/>
-                    <?php
-                    if (isset($errorMessage))
-                    {
-                        echo '<p> Message :' . $errorMessage . '</p>';
-                    }
-                    ?>
                     <p class="col-12 col-lg-12">
-                        <label for="author">Votre pseudo : </label><input type="text" name="author" value="<?=$_SESSION['user'] ?? ''?>" maxlength="255" required/><br/>
-                        <label for="content">Message : </label><textarea name="content"></textarea><br/>
+                        <label for="author">Votre pseudo : </label><input type="text" id="author" name="author" value="<?=$_SESSION['user'] ?? ''?>" maxlength="255" required/><br/>
+                        <label for="content">Message : </label><textarea id="content" name="content"></textarea><br/>
                         <input type="hidden" name="chapterId" value="<?= $chapterId ?? ''?>"/>
                         <input type="submit" value="Enregistrer" name="post-comment" />
                     </p>
