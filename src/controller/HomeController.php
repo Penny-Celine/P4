@@ -53,19 +53,6 @@ class HomeController
 
     }
 
-    public function displayLoginPage()
-    {
- 
-        $this->connect();   
-
-    }
-
-    public function displayTextEditor()
-    {
-        $editorPage = new EditorController();
-        $editorPage->createChapter();
-    }
-
     public function displayAChapter()
     {
         if (isset($_GET['id']))
@@ -90,11 +77,6 @@ class HomeController
         }
     }
 
-    public function displayCommentList()
-    {
-        $editorPage = new EditorController();
-        $editorPage->moderate();
-    }
 
     public function comment()
     {
@@ -175,7 +157,8 @@ class HomeController
                     {
                         $_SESSION['user'] = $pseudo;
                         $_SESSION['privilege'] = $connectingUser->privilege();
-                        $this->displayHomePage();
+                        header('Location: http://localhost/P4_Maupoux_Celine_01_Code_Source/');
+                        exit();
                     }
                     else
                     {
@@ -191,7 +174,8 @@ class HomeController
             }
         } else if (isset($_SESSION['user']) && isset($_SESSION['privilege']))
         {
-            $this->displayHomePage();
+            header('Location: http://localhost/P4_Maupoux_Celine_01_Code_Source/');
+            exit();
         } else        
         {
             ob_start();

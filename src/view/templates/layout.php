@@ -12,14 +12,7 @@
         <script src="https://cdn.tiny.cloud/1/luz0l8xqjjreoace2csbqtyqqoilfr7oveqv5o9fdmjdaovh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     </head>
     <body>
-        <script>
-            tinymce.init({
-                selector: 'textarea',
-                plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                toolbar_mode: 'floating',
-                toolbar: 'undo redo | styleselect | bold italic underline | h5 h6 | backcolor forecolor | alignleft aligncenter alignright alignjustify | outdent indent'
-            });
-        </script>
+
         <?= 
             $pageContent ?? 'Erreur 404 : Page non trouvée'
         ?>
@@ -28,5 +21,13 @@
                 Site développé par Céline Maupoux pour <a class="btn-dark" href="https://www.openclassrooms.com">OpenClassrooms</a> | <a class="btn-dark" href="?page=mentions">Mentions légales</a>
             </p>
         </footer>
+        <script>
+            tinymce.init({
+                selector: 'textarea',
+                plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                toolbar_mode: 'floating',
+                toolbar: 'undo redo | styleselect | bold italic underline | h5 h6 | backcolor forecolor | alignleft aligncenter alignright alignjustify | outdent indent'
+            });
+        </script>
     </body>
 </html>

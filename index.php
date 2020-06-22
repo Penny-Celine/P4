@@ -4,16 +4,15 @@ session_start();
 require('vendor/autoload.php');
 require('src/config/dev.php');
 
-use App\Controller\HomeController;
-
-$page = new HomeController();
+$page = new App\Controller\HomeController();
+$editorPage = new App\Controller\EditorController();
 
 
 if (isset($_GET['page'])) {
     switch ($_GET['page']) {
 
         case 'connexion' :
-            $page->displayLoginPage();
+            $page->connect();
             break;
         case 'inscription' :
             $page->displaySubscribePage();
@@ -22,17 +21,36 @@ if (isset($_GET['page'])) {
             $page->displayChaptersList();
             break;
         case 'nouveau_chapitre' :
-            $page->displayTextEditor();
+            if (isset($_SESSION['privilege']) && $_SESSION['privilege']==='admin')
+            {
+                $editorPage->createChapter();
+            } else 
+            {
+                header('Location : http://localhost/P4_Maupoux_Celine_01_Code_Source/index.php');
+                exit();
+                //$page->displayHomePage();
+            }
             break;
         case 'chapitre':
             $page->displayAChapter();
             break;
         case 'moderation' :
-            $page->displayCommentList();
+            if (isset($_SESSION['privilege']) && $_SESSION['privilege']==='admin')
+            {
+                $editorPage->moderate();
+            } else
+            {
+                header('Location: http://localhost/P4_Maupoux_Celine_01_Code_Source/');
+                exit();
+                //$page->displayHomePage();
+            }
+            //$page->displayCommentList();
             break;
         case 'deconnexion' :
             session_destroy();
-            $page->displayHomePage();
+            header('Location: http://localhost/P4_Maupoux_Celine_01_Code_Source/');
+            exit();
+            //$page->displayHomePage();
             break;
         case 'mentions' :
             $page->displayLegalPage();
